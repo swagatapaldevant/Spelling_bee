@@ -11,6 +11,36 @@ class AppColors{
 
   // general Color
   static const Color colorBlack = Color(0xFF000000);
+  static const Color colorBlack1 = Color(0xFF0F0E0E);
+  static const Color welcomeText = Color(0xFF500B0B);
+  static const Color welcomeButtonColor = Color(0xFFCE4614);
+  static const Color forgotPasswordColor = Color(0xFF313131);
+  static const Color dashboardContainerBackgroundColor = Color(0xFF0E6889);
+  static const Color dashboardContainerBorderColor = Color(0xFFD9D9D9);
+  static const Color exploreCardColor = Color(0xFF459CBC);
+  static const Color dailyStreakColor = Color(0xFFE26B1E);
+  static const Color navbarItemColor = Color(0xFF0E6889);
+  static const Color navbarItemColorDown = Color(0xFFD92036);
+  static const Color containerColor = Color(0xFFC66D32);
+  static const Color progressBarColor = Color(0xFF289788);
+  static const Color progressBarTextColor = Color(0xFFE26B1E);
+  static const Color gameControllerBg = Color(0xFF107599);
+  static const Color listenSpellBg = Color(0xFFE38E04);
+  static const Color rewardBg = Color(0xFF003D73);
+  static const Color alphabetSafeArea = Color(0xFF24735E);
+  static const Color alphabetFunContainer = Color(0xFF005F82);
+  static const Color alphabetFunContainer1 = Color(0xFF005F82);
+  static const Color alphabetFunContainer2 = Color(0xFF7C3B10);
+  static const Color alphabetFunContainer3 = Color(0xFF927AFF);
+  static const Color alphabetFunContainer4 = Color(0xFF003D73);
+  static const Color numberGame1 = Color(0xFFFED402);
+  static const Color numberGame2 = Color(0xFF7C3B10);
+  static const Color numberGame3 = Color(0xFF927AFF);
+  static const Color numberGame4 = Color(0xFFE38E04);
+  static const Color optionContainer = Color(0xFFC4DBDE);
+  static const Color parentConcernBg = Color(0xFFF6F3ED);
+  static const Color exploreCardBg = Color(0xFFD9EBF1);
+
   static const Color gray7 = Color(0xFFCBCBCB);
   static const Color gray3 = Color(0xFFE9E9E9);
   static const Color white = Color(0xFFFFFFFF);

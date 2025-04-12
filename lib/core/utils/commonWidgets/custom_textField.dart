@@ -38,7 +38,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(ScreenUtils().screenWidth(context) * 0.03),
+        borderRadius: BorderRadius.circular(ScreenUtils().screenWidth(context) * 0.02),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -54,10 +54,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         cursorColor: AppColors.colorPrimaryText,
         cursorWidth: 2,
         style: TextStyle(
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.bold,
           color: AppColors.colorBlack,
-          fontFamily: "Poppins",
-          fontSize: 18,
+          fontFamily: "comic_neue",
+          fontSize: 14,
         ),
         decoration: InputDecoration(
           suffixIcon: widget.isPassword
@@ -75,11 +75,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
           hintStyle: TextStyle(
             fontWeight: FontWeight.w600,
             color: AppColors.colorPrimaryText,
-            fontFamily: "Poppins",
-            fontSize: 16
+            fontFamily: "comic_neue",
+            fontSize: 14
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(ScreenUtils().screenWidth(context) * 0.03),
+            borderRadius: BorderRadius.circular(ScreenUtils().screenWidth(context) * 0.02),
             borderSide: BorderSide.none,
           ),
           filled: true,

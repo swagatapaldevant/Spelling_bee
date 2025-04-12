@@ -1,7 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:spelling_bee/features/auth/screens/signup_screen.dart';
+import 'package:spelling_bee/features/child_dashboard/screens/bottom_nav_bar.dart';
+import 'package:spelling_bee/features/child_dashboard/screens/child_dashboard_screen.dart';
+import 'package:spelling_bee/features/exploreAndPlay/screens/All_bengali_letter_screen.dart';
+import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_alphabet_screen.dart';
+import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_number_screen.dart';
+import 'package:spelling_bee/features/exploreAndPlay/screens/match_the_letter_game.dart';
+import 'package:spelling_bee/features/splash/overview_screen.dart';
+import 'package:spelling_bee/features/splash/wellcome_screen.dart';
 
+import '../../../features/auth/screens/login_screen.dart';
+import '../../../features/auth/screens/parent_concern_screen.dart';
+import '../../../features/exploreAndPlay/screens/single_bengali_letter_screen.dart';
 import '../../../features/splash/splash_screen.dart';
 import '../../utils/helper/app_fontSize.dart';
 
@@ -9,29 +21,20 @@ class RouteGenerator{
 
   // general navigation
   static const kSplash = "/";
-  static const kInstituteTypeSelectionScreen = "/InstituteTypeSelectionScreen";
-  static const kInstituteSelectionScreen = "/InstituteSelectionScreen";
-  static const kLoginTypeSelectionScreen = "/LoginTypeSelectionScreen";
-  static const kLogInScreen = "/LogInScreen";
+  static const kWellcomeScreen = "/WellcomeScreen";
+  static const kLoginScreen = "/LoginScreen";
+  static const kBottomNavBar = "/BottomNavBar";
+  static const kChildDashboardScreen = "/ChildDashboardScreen";
+  static const kOverviewScreen = "/OverviewScreen";
+  static const kSignupScreen = "/SignupScreen";
+  static const kParentConcernScreen = "/ParentConcernScreen";
+  static const kExploreAndPlayScreen = "/ExploreAndPlayScreen";
+  static const kExploreAndPlayNumberScreen = "/ExploreAndPlayNumberScreen";
+  static const kMatchTheLetterGame = "/MatchTheLetterGame";
+  static const kAllBengaliLetterScreen = "/AllBengaliLetterScreen";
+  static const kBengaliLetterDetailScreen = "/BengaliLetterDetailScreen";
 
 
-  // student module
-  static const kStudentButtonNavigation = "/StudentButtonNavigation";
-  static const kHomeTaskViewAll = "/HomeTaskViewAll";
-
-
-
-  // teachers module
-  static const kTeacherButtonNavigation = "/TeacherButtonNavigation";
-  static const kAttendanceTakingScreen = "/AttendanceTakingScreen";
-  static const kCreateNotesAssignInformationScreen = "/CreateNotesAssignInformationScreen";
-  static const kCreateNotesAssignToScreen = "/CreateNotesAssignToScreen";
-  static const kStudentSelectionScreen = "/StudentSelectionScreen";
-
-
-  // parents module
-
-  static const kStudentSelectionByParent = "/StudentSelectionByParent";
 
 
 
@@ -46,6 +49,30 @@ class RouteGenerator{
       case kSplash:
         //return MaterialPageRoute(builder: (_)=>SplashScreen());
         return _animatedPageRoute(SplashScreen());
+     case kWellcomeScreen:
+        return _animatedPageRoute(WellcomeScreen());
+     case kLoginScreen:
+        return _animatedPageRoute(LoginScreen());
+     case kBottomNavBar:
+        return _animatedPageRoute(BottomNavBar());
+     case kChildDashboardScreen:
+        return _animatedPageRoute(ChildDashboardScreen());
+     case kOverviewScreen:
+        return _animatedPageRoute(OverviewScreen());
+     case kSignupScreen:
+        return _animatedPageRoute(SignupScreen());
+      case kParentConcernScreen:
+        return _animatedPageRoute(ParentConcernScreen());
+     case kExploreAndPlayScreen:
+        return _animatedPageRoute(ExploreAndPlayScreen());
+     case kExploreAndPlayNumberScreen:
+        return _animatedPageRoute(ExploreAndPlayNumberScreen());
+     case kMatchTheLetterGame:
+        return _animatedPageRoute(MatchTheLetterGame());
+     case kAllBengaliLetterScreen:
+        return _animatedPageRoute(AllBengaliLetterScreen());
+     case kBengaliLetterDetailScreen:
+        return _animatedPageRoute(BengaliLetterDetailScreen(initialIndex: args as int,));
 
 
       default:

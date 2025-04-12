@@ -60,6 +60,7 @@ CommonDialog(
                       child: Icon(
                         icon,
                         color: AppColors.white,
+                        size: 30,
                       )),
                   SizedBox(
                     height: ScreenUtils().screenHeight(context) * 0.02,
@@ -67,10 +68,10 @@ CommonDialog(
                   Text(
                     title,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          fontFamily: "Poppins",
+                      fontFamily: "comic_neue",
                           color: AppColors.colorBlack,
                           fontSize: ScreenUtils().screenWidth(context) * 0.05,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                         ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -84,11 +85,11 @@ CommonDialog(
                       msg,
                       style:
                           Theme.of(context).textTheme.displayMedium?.copyWith(
-                                fontFamily: "Poppins",
+                              fontFamily: "comic_neue",
                                 color: AppColors.darkBlue,
                                 fontSize:
-                                    ScreenUtils().screenWidth(context) * 0.038,
-                                fontWeight: FontWeight.w300,
+                                    ScreenUtils().screenWidth(context) * 0.04,
+                                fontWeight: FontWeight.w600,
                               ),
                       maxLines: 7,
                       textAlign: TextAlign.center,
@@ -141,7 +142,7 @@ CommonDialog(
                             color: AppColors.colorTomato,
                             borderColor: AppColors.colorTomato,
                             onPressed: activeButtonOnClicked,
-                            text: "Log Out"),
+                            text: "Confirm"),
                       ),
                     ],
                   )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spelling_bee/core/services/routeGenerator/route_generator.dart';
+import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
       title: 'Spelling Bee',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: AppColors.white,
+        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
       navigatorKey: RouteGenerator.navigatorKey,

@@ -22,7 +22,7 @@ class _LearningGameCategorySectionState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: ScreenUtils().screenWidth(context) * 0.4,
+      width: ScreenUtils().screenWidth(context) * 0.45,
       child: Column(
         children: [
           Stack(
@@ -66,6 +66,8 @@ class _LearningGameCategorySectionState
           ),
           Text(
             widget.gameName,
+            textAlign: TextAlign.center,
+
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontFamily: "comic_neue",

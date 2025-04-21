@@ -9,6 +9,18 @@ class BengaliLetterQuestion {
 }
 
 
+
+// final List<String> sworoborno = [
+//   'অ', 'আ', 'ই', 'ঈ', 'উ', 'ঊ', 'ঋ', 'এ', 'ঐ', 'ও', 'ঔ'
+// ];
+
+// final List<String> banjonborno = [
+//   'ক', 'খ', 'গ', 'ঘ', 'ঙ', 'চ', 'ছ', 'জ', 'ঝ', 'ঞ',
+//   'ট', 'ঠ', 'ড', 'ঢ', 'ণ', 'ত', 'থ', 'দ', 'ধ', 'ন',
+//   'প', 'ফ', 'ব', 'ভ', 'ম', 'য', 'র', 'ল', 'শ', 'ষ',
+//   'স', 'হ', 'ড়', 'ঢ়', 'য়', 'ৎ', 'ং', 'ঃ', 'ঁ'
+// ];
+
 //sample data
 List<BengaliLetterQuestion> letterQuestions = [
   BengaliLetterQuestion(letter: 'অ', options: ['অ', 'আ', 'ই', 'উ']),

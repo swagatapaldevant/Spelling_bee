@@ -3,8 +3,14 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 
+import '../../../core/network/apiHelper/locator.dart';
+import '../../../core/network/apiHelper/resource.dart';
+import '../../../core/network/apiHelper/status.dart';
+import '../../../core/services/localStorage/shared_pref.dart';
 import '../../../core/utils/commonWidgets/common_button.dart';
 import '../../../core/utils/commonWidgets/custom_textField.dart';
+import '../../../core/utils/helper/common_utils.dart';
+import '../data/auth_usecase.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,7 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  final AuthUsecase _authUsecase = getIt<AuthUsecase>();
+  final SharedPref _pref = getIt<SharedPref>();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +35,12 @@ class _LoginScreenState extends State<LoginScreen> {
         width: ScreenUtils().screenWidth(context),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
             colors: <Color>[
-              Color(0xffc66d32),
-              Color(0xfffed402),
+              Color(0xff005F82),
+              Color(0xff005F82),
+              Color(0xffFFFFFF),
             ],
             tileMode: TileMode.mirror,
           ),
@@ -45,8 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 top: 0,
                 right: 20,
                 child: Image.asset("assets/images/login_bee.png", fit: BoxFit.contain,
-                //height: ScreenUtils().screenHeight(context)*0.4,
-                  width: ScreenUtils().screenWidth(context)*0.7,
+                height: ScreenUtils().screenHeight(context)*0.45,
+                  width: ScreenUtils().screenWidth(context)*0.9,
                 ),
               ),
 
@@ -79,13 +88,32 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),),
                         SizedBox(height: ScreenUtils().screenHeight(context)*0.04,),
 
-                        CustomTextField(controller: phoneController, hintText: 'Mobile number/email', prefixIcon: Icons.phone,),
+                        CustomTextField(
+                          controller: phoneController,
+                          hintText: 'Mobile number/email',
+                          prefixIcon: Icons.phone,),
                         SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-                        CustomTextField(controller: passwordController, hintText: 'Password', prefixIcon: Icons.lock,suffixIcon: Icons.visibility,),
+                        CustomTextField(
+                          controller: passwordController,
+                          hintText: 'Password',
+                          prefixIcon: Icons.lock,
+                          suffixIcon: Icons.visibility,
+                          isPassword: true,
+                        ),
                         SizedBox(height: ScreenUtils().screenHeight(context)*0.04,),
-                         CommonButton(
+                        isLoading?CircularProgressIndicator(
+                          color: AppColors.containerColor,
+                        ): CommonButton(
                             onTap: (){
-                              Navigator.pushNamed(context, "/BottomNavBar");
+                              if(phoneController.text.isNotEmpty && passwordController.text.isNotEmpty)
+                                {
+                                  loginChild();
+                                }
+                              else{
+                                CommonUtils().flutterSnackBar(
+                                    context: context, mes:"Enter valid email and password", messageType: 4);
+                              }
+
                             },
                             fontSize: 16,
                             height: ScreenUtils().screenHeight(context)*0.05,
@@ -152,4 +180,46 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  loginChild() async {
+    setState(() {
+      isLoading = true;
+    });
+    //String? instituteId = await _pref.getInstituteId();
+
+    Map<String, dynamic> requestData = {
+      "email" : phoneController.text.trim(),
+      "password": passwordController.text.trim()
+    };
+
+    Resource resource =
+    await _authUsecase.logIn(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+       _pref.setLoginStatus(true);
+       _pref.setUserAuthToken(resource.data["token"]);
+       _pref.setChildId(
+           resource.data["logedInUser"]["_id"].toString());
+       _pref.setLanguageId(resource.data["logedInUser"]["language"]["_id"].toString());
+       _pref.setCurrentLanguageName(resource.data["logedInUser"]["language"]["language_name"].toString());
+       _pref.setUserType(resource.data["logedInUser"]["user_type"].toString());
+       _pref.setUserName(resource.data["logedInUser"]["name"].toString());
+       
+
+      //print(_pref.getUserAuthToken());
+      setState(() {
+        isLoading = false;
+        Navigator.pushReplacementNamed(context,"/BottomNavBar");
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      CommonUtils().flutterSnackBar(
+          context: context, mes: resource.message ?? "", messageType: 4);
+    }
+  }
+
+
+
 }

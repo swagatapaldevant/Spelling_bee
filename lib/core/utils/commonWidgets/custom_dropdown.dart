@@ -5,8 +5,8 @@ import '../helper/screen_utils.dart';
 
 class CustomDropDownForTaskCreation extends StatefulWidget {
   final String placeHolderText;
-  final Function(String, int) onValueSelected;
-  final Map<String, int>? data;
+  final Function(String, String) onValueSelected;
+  final Map<String, String>? data;
   final bool isDisabled; // Added flag to disable dropdown
 
   const CustomDropDownForTaskCreation({
@@ -68,7 +68,7 @@ class _CustomDropDownForTaskCreationState extends State<CustomDropDownForTaskCre
               setState(() {
                 selectedValue = newValue;
               });
-              int? selectedId = widget.data?[newValue];
+              String? selectedId = widget.data?[newValue];
               if (selectedId != null) {
                 widget.onValueSelected(newValue, selectedId);
               }

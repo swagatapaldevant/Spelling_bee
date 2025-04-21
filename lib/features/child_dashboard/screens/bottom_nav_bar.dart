@@ -12,13 +12,15 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
 
-  int selectedIndex = 1;
+  int selectedIndex = 0;
 
   final List<Widget> _pages = [
-    Center(child: Text('Puzzle Page')),
+
     ChildDashboardScreen(),
-    Center(child: Text('Teddy Page')),
-    Center(child: Text('Settings Page')),
+    Center(child: Text('Game Page')),
+    Center(child: Text('Achievement Page')),
+    Center(child: Text('Profile Page')),
+
   ];
 
   void _onItemTapped(int index) {

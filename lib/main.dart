@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:spelling_bee/core/services/routeGenerator/route_generator.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 
+import 'core/network/apiHelper/locator.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeDependency();
   runApp(const MyApp());
 }
 

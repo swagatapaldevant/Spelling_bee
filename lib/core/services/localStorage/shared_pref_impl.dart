@@ -5,12 +5,17 @@ import 'package:spelling_bee/core/services/localStorage/shared_pref.dart';
 class SharedPrefImpl extends SharedPref {
 
 
-  final String _instituteId = "Institute Id";
+  final String _languageId = "Language Id";
   final String _loginStatus = "loginStatus";
-  final String _candidateId = "candidate id";
-  final String _schoolName = "school name";
-  final String _userName = "user name";
+  final String _childId = "child id";
   final String _userType = "user type";
+  final String _vowelId = "vowel id";
+  final String _consonantId = "consonant id";
+  final String _numericId = "numeric id";
+  final String _userName = "user name";
+  final String _currentLanguageName = "language name";
+
+
   final String _childrenListKey = "childrenList";
   final String _childrenCount = "childrenCount";
 
@@ -30,15 +35,15 @@ class SharedPrefImpl extends SharedPref {
 
 
   @override
-  Future<String?> getInstituteId() async {
+  Future<String?> getLanguageId() async {
     final SharedPreferences prefs = await super.prefs;
-    return prefs.getString(_instituteId) ?? "";
+    return prefs.getString(_languageId) ?? "";
   }
 
   @override
-  void setInstituteId(String id) async{
+  void setLanguageId(String id) async{
     final SharedPreferences prefs = await super.prefs;
-    prefs.setString(_instituteId, id);
+    prefs.setString(_languageId, id);
   }
 
   @override
@@ -66,30 +71,65 @@ class SharedPrefImpl extends SharedPref {
   }
 
   @override
-  Future<String> getCandidateId() async {
+  Future<String> getChildId() async {
     final SharedPreferences prefs = await super.prefs;
-    return prefs.getString(_candidateId) ?? "";
+    return prefs.getString(_childId) ?? "";
   }
 
   @override
-  void setCandidateId(String candidateId) async {
+  void setChildId(String childId) async {
     final SharedPreferences prefs = await super.prefs;
-    prefs.setString(_candidateId, candidateId);
+    prefs.setString(_childId, childId);
   }
 
 
   @override
-  Future<String> getSchoolName() async {
+  Future<String> getUserType() async {
     final SharedPreferences prefs = await super.prefs;
-    return prefs.getString(_schoolName) ?? "";
+    return prefs.getString(_userType) ?? "";
   }
 
   @override
-  void setSchoolName(String schoolName) async {
+  void setUserType(String userType) async {
     final SharedPreferences prefs = await super.prefs;
-    prefs.setString(_schoolName, schoolName);
+    prefs.setString(_userType,userType );
   }
 
+  @override
+  Future<String> getVowelId() async {
+    final SharedPreferences prefs = await super.prefs;
+    return prefs.getString(_vowelId) ?? "";
+  }
+
+  @override
+  void setVowelId(String vowelId) async {
+    final SharedPreferences prefs = await super.prefs;
+    prefs.setString(_vowelId, vowelId);
+  }
+
+  @override
+  Future<String> getConsonantId() async {
+    final SharedPreferences prefs = await super.prefs;
+    return prefs.getString(_consonantId) ?? "";
+  }
+
+  @override
+  void setConsonantId(String consonantId) async {
+    final SharedPreferences prefs = await super.prefs;
+    prefs.setString(_consonantId, consonantId);
+  }
+
+  @override
+  Future<String> getNumericId() async {
+    final SharedPreferences prefs = await super.prefs;
+    return prefs.getString(_numericId) ?? "";
+  }
+
+  @override
+  void setNumericId(String numericId) async {
+    final SharedPreferences prefs = await super.prefs;
+    prefs.setString(_numericId, numericId);
+  }
 
   @override
   Future<String> getUserName() async {
@@ -104,16 +144,23 @@ class SharedPrefImpl extends SharedPref {
   }
 
   @override
-  Future<String> getUserType() async {
+  Future<String> getCurrentLanguageName() async {
     final SharedPreferences prefs = await super.prefs;
-    return prefs.getString(_userType) ?? "";
+    return prefs.getString(_currentLanguageName) ?? "";
   }
 
   @override
-  void setUserType(String userType) async {
+  void setCurrentLanguageName(String languageName) async {
     final SharedPreferences prefs = await super.prefs;
-    prefs.setString(_userType,userType );
+    prefs.setString(_currentLanguageName, languageName);
   }
+
+
+
+
+
+
+
 
   @override
   void clearOnLogout() async {

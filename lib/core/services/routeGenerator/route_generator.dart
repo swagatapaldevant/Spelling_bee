@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:spelling_bee/features/auth/screens/signup_screen.dart';
 import 'package:spelling_bee/features/child_dashboard/screens/bottom_nav_bar.dart';
 import 'package:spelling_bee/features/child_dashboard/screens/child_dashboard_screen.dart';
-import 'package:spelling_bee/features/exploreAndPlay/screens/All_bengali_letter_screen.dart';
 import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_alphabet_screen.dart';
 import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_number_screen.dart';
-import 'package:spelling_bee/features/exploreAndPlay/screens/match_the_letter_game.dart';
+import 'package:spelling_bee/features/exploreAndPlay/screens/vowel_game/vowel_details_screen.dart';
 import 'package:spelling_bee/features/splash/overview_screen.dart';
 import 'package:spelling_bee/features/splash/wellcome_screen.dart';
 
 import '../../../features/auth/screens/login_screen.dart';
 import '../../../features/auth/screens/parent_concern_screen.dart';
-import '../../../features/exploreAndPlay/screens/single_bengali_letter_screen.dart';
+import '../../../features/exploreAndPlay/screens/learning_game_button_navbar.dart';
 import '../../../features/splash/splash_screen.dart';
 import '../../utils/helper/app_fontSize.dart';
 
@@ -30,9 +29,10 @@ class RouteGenerator{
   static const kParentConcernScreen = "/ParentConcernScreen";
   static const kExploreAndPlayScreen = "/ExploreAndPlayScreen";
   static const kExploreAndPlayNumberScreen = "/ExploreAndPlayNumberScreen";
-  static const kMatchTheLetterGame = "/MatchTheLetterGame";
-  static const kAllBengaliLetterScreen = "/AllBengaliLetterScreen";
-  static const kBengaliLetterDetailScreen = "/BengaliLetterDetailScreen";
+  //static const kMatchTheLetterGame = "/MatchTheLetterGame";
+  //static const kAllBengaliLetterScreen = "/AllBengaliLetterScreen";
+  static const kVowelDetailsScreen = "/VowelDetailsScreen";
+  static const kLearningGameButtonNavbar = "/LearningGameButtonNavbar";
 
 
 
@@ -67,12 +67,23 @@ class RouteGenerator{
         return _animatedPageRoute(ExploreAndPlayScreen());
      case kExploreAndPlayNumberScreen:
         return _animatedPageRoute(ExploreAndPlayNumberScreen());
-     case kMatchTheLetterGame:
-        return _animatedPageRoute(MatchTheLetterGame());
-     case kAllBengaliLetterScreen:
-        return _animatedPageRoute(AllBengaliLetterScreen());
-     case kBengaliLetterDetailScreen:
-        return _animatedPageRoute(BengaliLetterDetailScreen(initialIndex: args as int,));
+     // case kMatchTheLetterGame:
+     //    return _animatedPageRoute(MatchTheLetterGame());
+     // case kAllBengaliLetterScreen:
+     //    return _animatedPageRoute(AllBengaliLetterScreen(
+     //     // letter: args as List<String>,
+     //    ));
+      case kVowelDetailsScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        return _animatedPageRoute(
+          VowelDetailsScreen(
+            initialIndex: args["index"] as int,
+            letterList: List<String>.from(args["letterList"]),
+          ),
+        );
+
+      case kLearningGameButtonNavbar:
+        return _animatedPageRoute(LearningGameButtonNavbar(index: args as int,));
 
 
       default:

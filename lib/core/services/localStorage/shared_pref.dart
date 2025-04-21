@@ -5,9 +5,9 @@ abstract class SharedPref {
 
   SharedPref();
 
-  // for institute id
-  void setInstituteId(String id);
-  Future<String?>getInstituteId();
+  // for language id
+  void setLanguageId(String id);
+  Future<String?>getLanguageId();
 
   // for login or not
   void setLoginStatus(bool status);
@@ -18,20 +18,38 @@ abstract class SharedPref {
   Future<String> getUserAuthToken();
 
   // for candidate id
-  void setCandidateId(String candidateId);
-  Future<String?> getCandidateId();
+  void setChildId(String childId);
+  Future<String?> getChildId();
 
-  // for school name
-  void setSchoolName(String schoolName);
-  Future<String?> getSchoolName();
 
-  // for name(teacher/student/parent)
+  // for userType(child/parent)
+  void setUserType(String userType);
+  Future<String> getUserType();
+
+  // for vowelId
+  void setVowelId(String vowelId);
+  Future<String> getVowelId();
+
+  // for consonantId
+  void setConsonantId(String consonantId);
+  Future<String> getConsonantId();
+
+  // for consonantId
+  void setNumericId(String consonantId);
+  Future<String> getNumericId();
+
+  // for name(child/parent)
   void setUserName(String userName);
   Future<String?> getUserName();
 
-  // for userType(teacher/student/parent)
-  void setUserType(String userType);
-  Future<String> getUserType();
+  // for language name
+  void setCurrentLanguageName(String languageName);
+  Future<String?> getCurrentLanguageName();
+
+
+
+
+
 
   // store children list
   void setChildrenList(Map<String, String> childrenList);

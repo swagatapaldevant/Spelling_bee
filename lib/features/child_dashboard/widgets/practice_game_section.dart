@@ -15,9 +15,9 @@ class _PracticeGameSectionState extends State<PracticeGameSection> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        PracticeGameWidget(imageLink: 'assets/images/level_1.png', level: 'level-1',),
-        PracticeGameWidget(imageLink: 'assets/images/level_2.png', level: 'level-2',),
-        PracticeGameWidget(imageLink: 'assets/images/level_3.png', level: 'level-3',)
+        PracticeGameWidget(imageLink: 'assets/images/level_1.png', level: 'Alphabet Fun',),
+        PracticeGameWidget(imageLink: 'assets/images/level_2.png', level: 'Sound It Out',),
+        PracticeGameWidget(imageLink: 'assets/images/level_3.png', level: 'Number Fun',)
 
       ],
     );
@@ -40,9 +40,9 @@ class PracticeGameWidget extends StatelessWidget {
           width: ScreenUtils().screenWidth(context)*0.25,
         ),
         Text(level, style: TextStyle(
-            fontFamily: "Kavoon",
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
+            fontFamily:"comic_neue",
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
             color: AppColors.dailyStreakColor
         ),)
       ],

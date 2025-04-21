@@ -42,10 +42,10 @@ class CustomBottomNavBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildNavItem("assets/images/puzzle.png", 0, "Puzzle", context),
-            _buildNavItem("assets/images/home.png", 1, "Home", context),
-            _buildNavItem("assets/images/teddy.png", 2, "Teddy", context),
-            _buildNavItem("assets/images/settings.png", 3, "Settings", context),
+            _buildNavItem("assets/images/home.png", 0, "Home", context),
+            _buildNavItem("assets/images/puzzle.png", 1, "Game", context),
+            _buildNavItem("assets/images/star.png", 2, "Achievement", context),
+            _buildNavItem("assets/images/teddy.png", 3, "Profile", context),
           ],
         ),
       ),

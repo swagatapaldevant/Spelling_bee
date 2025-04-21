@@ -4,7 +4,8 @@ import '../../../core/utils/constants/app_colors.dart';
 import '../../../core/utils/helper/screen_utils.dart';
 
 class ChildDashboardHeaderWidget extends StatelessWidget {
-  const ChildDashboardHeaderWidget({super.key});
+  final String name;
+  const ChildDashboardHeaderWidget({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class ChildDashboardHeaderWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Hello little \n Oliver", style: TextStyle(
+              Text("Hello little \n $name", style: TextStyle(
                   fontFamily: "comic_neue",
                   fontSize: 21,
                   fontWeight: FontWeight.w700,

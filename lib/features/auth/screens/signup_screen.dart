@@ -29,11 +29,12 @@ class _SignupScreenState extends State<SignupScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration:  BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFC66D32), // Top-left orange
-              Color(0xFFFED402), // Bottom-right yellow
+              Color(0xFF0E6889).withOpacity(0.74), // Top-left orange
+              Color(0xFF0E6889).withOpacity(0.74), // Bottom-right yellow
+              Color(0xFF003D73).withOpacity(0.73), // Bottom-right yellow
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -176,7 +177,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 right: 0,
                 top: 0,
                 child: Image.asset(
-                  "assets/images/signup_cn.png",
+                  "assets/images/overview_cn.png",
                   height: ScreenUtils().screenHeight(context) * 0.2,
                   width: ScreenUtils().screenWidth(context) * 0.4,
                   fit: BoxFit.contain,

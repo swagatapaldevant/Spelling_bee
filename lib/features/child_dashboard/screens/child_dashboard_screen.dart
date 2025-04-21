@@ -5,6 +5,8 @@ import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 import 'package:spelling_bee/features/child_dashboard/widgets/child_dashboard_progress_container.dart';
 import 'package:spelling_bee/features/child_dashboard/widgets/dashboard_circular_progress_widget.dart';
 
+import '../../../core/network/apiHelper/locator.dart';
+import '../../../core/services/localStorage/shared_pref.dart';
 import '../../../core/utils/commonWidgets/custom_buttom_navigation.dart';
 import '../widgets/achievement_section.dart';
 import '../widgets/child_dashboard_header.dart';
@@ -25,6 +27,23 @@ class ChildDashboardScreen extends StatefulWidget {
 
 class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
 
+  final SharedPref _pref = getIt<SharedPref>();
+   String childName="";
+
+   @override
+  void initState() {
+    super.initState();
+    userData();
+  }
+
+  void userData() async {
+    String? name = await _pref.getUserName();
+    setState(() {
+      childName = name ?? "";
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +54,7 @@ class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
           //physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-              ChildDashboardHeaderWidget(),
+              ChildDashboardHeaderWidget(name: childName,),
               Padding(
                 padding: EdgeInsets.all(AppDimensions.screenPadding),
                 child: Column(
@@ -63,8 +82,53 @@ class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
                     SizedBox(
                       height: ScreenUtils().screenHeight(context) * 0.02,
                     ),
-                    ChildDashboardHeader(
-                      headerName: 'Practice Games',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ChildDashboardHeader(
+                          headerName: 'Practice Games',
+                        ),
+                        InkWell(
+                          onTap: (){},
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.exploreCardColor,
+                              borderRadius: BorderRadius.circular(11),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.colorBlack.withOpacity(0.25), // Shadow color
+                                  blurRadius: 4, // Blur radius
+                                  offset: Offset(0, 4), // Horizontal and vertical offset
+                                  spreadRadius: 0, // How much the shadow will spread
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding:  EdgeInsets.symmetric(
+                                  horizontal: ScreenUtils().screenWidth(context)*0.02,
+                                  vertical: ScreenUtils().screenWidth(context)*0.01
+
+                              ),
+                              child: Row(
+                                children: [
+                                  Text("See More", style: TextStyle(
+                                      fontFamily: "comic_neue",
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.white
+                                  ),),
+                                  Image.asset(
+                                    "assets/images/right_arrow.png",
+                                    height: ScreenUtils().screenHeight(context)*0.03,
+                                    width: ScreenUtils().screenWidth(context)*0.1,
+                                    fit: BoxFit.contain, // This makes the image cover the entire area of the circle
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     SizedBox(
                       height: ScreenUtils().screenHeight(context) * 0.02,

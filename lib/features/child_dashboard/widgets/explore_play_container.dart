@@ -39,7 +39,7 @@ class _ExplorePlayContainerState extends State<ExplorePlayContainer> {
         children: [
           ExplorePlayWidget(
             imageLink: 'assets/images/explore_1.png',
-            name: 'Alphabet & Spelling',
+            name: 'Alphabet ',
           onTap: widget.onAlphabetClicked,
           ),
           ExplorePlayWidget(

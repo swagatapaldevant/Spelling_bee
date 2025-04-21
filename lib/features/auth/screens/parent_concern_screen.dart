@@ -3,8 +3,15 @@ import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 
+import '../../../core/network/apiHelper/locator.dart';
+import '../../../core/network/apiHelper/resource.dart';
+import '../../../core/network/apiHelper/status.dart';
+import '../../../core/services/localStorage/shared_pref.dart';
 import '../../../core/utils/commonWidgets/common_button.dart';
 import '../../../core/utils/commonWidgets/custom_dropdown.dart';
+import '../../../core/utils/helper/common_utils.dart';
+import '../data/auth_usecase.dart';
+import '../models/language_list_model.dart';
 
 class ParentConcernScreen extends StatefulWidget {
   const ParentConcernScreen({super.key});
@@ -18,7 +25,18 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
   String? selectedValue;
   String? selectedValue1;
   String languageSelection="";
-  int? languageSelectionId;
+  String? languageSelectionId;
+  final AuthUsecase _authUsecase = getIt<AuthUsecase>();
+  final SharedPref _pref = getIt<SharedPref>();
+  bool isLoading = false;
+  List<LanguageListModel> languageList = [];
+  Map<String, String> languageListId = {};
+
+  @override
+  void initState() {
+    super.initState();
+    listOfLanguage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,12 +156,14 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                         ),
                         SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
                         CustomDropDownForTaskCreation(
-                          data: {"Bengali":0, "Hindi":1},
+                          data: languageListId,
                           placeHolderText: 'Select One Language',
-                          onValueSelected: (String value, int id) {
+                          onValueSelected: (String value, String id) {
                             setState(() {
                               languageSelection = value; // Update selected value
                               languageSelectionId = id;
+                              _pref.setLanguageId(languageSelectionId??"");
+                              _pref.setCurrentLanguageName(languageSelection);
                             });
                           },
                         ),
@@ -292,5 +312,46 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
       ),
     );
   }
+
+
+  listOfLanguage() async {
+    setState(() {
+      //isLoading = true;
+    });
+
+    Map<String, dynamic> requestData = {
+
+    };
+
+    Resource resource =
+    await _authUsecase.languageList(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+      languageList = (resource.data as List)
+          .map((x) => LanguageListModel.fromJson(x))
+          .toList();
+      languageListId.clear();
+      for (var item in languageList) {
+        String languageName =
+        "${item.languageName ?? ""} "
+            .trim();
+        String? languageId = item.sId;
+        if (languageId != null) {
+          languageListId[languageName] = languageId;
+        }
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      CommonUtils().flutterSnackBar(
+          context: context, mes: resource.message ?? "", messageType: 4);
+    }
+  }
+
 
 }

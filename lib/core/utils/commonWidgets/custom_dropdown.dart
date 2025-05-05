@@ -8,13 +8,14 @@ class CustomDropDownForTaskCreation extends StatefulWidget {
   final Function(String, String) onValueSelected;
   final Map<String, String>? data;
   final bool isDisabled; // Added flag to disable dropdown
+  final Color? dropdownContainerColor;
 
   const CustomDropDownForTaskCreation({
     super.key,
     required this.placeHolderText,
     required this.onValueSelected,
     this.data,
-    this.isDisabled = false, // Default to false (enabled)
+    this.isDisabled = false, this.dropdownContainerColor, // Default to false (enabled)
   });
 
   @override
@@ -30,7 +31,7 @@ class _CustomDropDownForTaskCreationState extends State<CustomDropDownForTaskCre
       padding: EdgeInsets.symmetric(
           horizontal: ScreenUtils().screenWidth(context) * 0.05),
       decoration: BoxDecoration(
-        color: widget.isDisabled ? Colors.grey[300] : Color(0xFFF5F5FA),
+        color: widget.isDisabled ? Colors.grey[300] : widget.dropdownContainerColor??Color(0xFFF5F5FA),
         // Change color when disabled
         borderRadius: BorderRadius.circular(
             ScreenUtils().screenWidth(context) * 0.03),

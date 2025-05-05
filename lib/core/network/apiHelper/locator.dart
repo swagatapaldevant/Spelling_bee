@@ -5,6 +5,8 @@ import '../../../features/auth/data/auth_usecase.dart';
 import '../../../features/auth/data/auth_usecase_impl.dart';
 import '../../../features/exploreAndPlay/data/explore_play_usecase.dart';
 import '../../../features/exploreAndPlay/data/explore_play_usecase_impl.dart';
+import '../../../features/game_category/data/game_category_usecase.dart';
+import '../../../features/game_category/data/game_category_usecase_impl.dart';
 import '../../services/localStorage/shared_pref.dart';
 import '../../services/localStorage/shared_pref_impl.dart';
 import '../apiClientRepository/api_client.dart';
@@ -21,6 +23,7 @@ void initializeDependency(){
   getIt.registerFactory<ApiClient>(()=> ApiClientImpl());
   getIt.registerFactory<AuthUsecase>(()=> AuthUsecaseImplementation());
   getIt.registerFactory<ExplorePlayUsecase>(()=> ExplorePlayUsecaseImplementation());
+  getIt.registerFactory<GameCategoryUsecase>(()=> GameCategoryUsecaseImplementation());
 
 
 

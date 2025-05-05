@@ -8,6 +8,7 @@ import 'package:spelling_bee/features/exploreAndPlay/screens/vowel_game/vowel_de
 
 import '../../../core/utils/commonWidgets/custom_buttom_navigation.dart';
 import '../../../core/utils/commonWidgets/scrollable_custom_navigation.dart';
+import 'common_screen/game_splash.dart';
 import 'consonant_game/all_consonant_screen.dart';
 import 'consonant_game/consonant_details_screen.dart';
 import 'match_numeric_game/all_numeric_screen.dart';
@@ -157,6 +158,12 @@ class _LearningGameButtonNavbarState extends State<LearningGameButtonNavbar> {
         switch (settings.name) {
           case '/':
             return _animatedPageRoute(
+              GameSplash(content: 'Vowel Game', index: 1,
+              ),
+            );
+
+          case '/AllBengaliVowelScreen':
+            return _animatedPageRoute(
               AllBengaliVowelScreen(
               ),
             );
@@ -190,6 +197,11 @@ class _LearningGameButtonNavbarState extends State<LearningGameButtonNavbar> {
         switch (settings.name) {
           case '/':
             return _animatedPageRoute(
+              GameSplash(content: 'Consonant Game', index: 2,
+              ),
+            );
+          case '/AllConsonantScreen':
+            return _animatedPageRoute(
               AllConsonantScreen(
               ),
             );
@@ -221,7 +233,13 @@ class _LearningGameButtonNavbarState extends State<LearningGameButtonNavbar> {
       key:numericGameNavigatorKey ,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
+
           case '/':
+            return _animatedPageRoute(
+              GameSplash(content: 'Numeric Game', index: 3,
+              ),
+            );
+          case '/AllNumericScreen':
             return _animatedPageRoute(
               AllNumericScreen(
               ),

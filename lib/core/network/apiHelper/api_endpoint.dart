@@ -21,6 +21,12 @@ class ApiEndPoint{
   static const bengaliAlphabetListApi =  "$baseurl/learning-details/get-learning-details-by-master-id/";
 
 
+  // game category list
+  static const gameCategory =  "$baseurl/game-category/by-language/";
+  static const gameListByCategory =  "$baseurl/game/get-by-category-id/";
+  static const gameLevelByGame =  "$baseurl/game-level/get-game-level-by-game-id/";
+
+
 
 
 

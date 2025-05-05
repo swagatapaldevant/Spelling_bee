@@ -7,12 +7,15 @@ import 'package:spelling_bee/features/child_dashboard/screens/child_dashboard_sc
 import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_alphabet_screen.dart';
 import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_number_screen.dart';
 import 'package:spelling_bee/features/exploreAndPlay/screens/vowel_game/vowel_details_screen.dart';
+import 'package:spelling_bee/features/game_category/models/game_list_model.dart';
+import 'package:spelling_bee/features/game_category/screens/game_navbar_screen.dart';
 import 'package:spelling_bee/features/splash/overview_screen.dart';
 import 'package:spelling_bee/features/splash/wellcome_screen.dart';
 
 import '../../../features/auth/screens/login_screen.dart';
 import '../../../features/auth/screens/parent_concern_screen.dart';
 import '../../../features/exploreAndPlay/screens/learning_game_button_navbar.dart';
+import '../../../features/profile/screens/edit_profile_screen.dart';
 import '../../../features/splash/splash_screen.dart';
 import '../../utils/helper/app_fontSize.dart';
 
@@ -33,6 +36,8 @@ class RouteGenerator{
   //static const kAllBengaliLetterScreen = "/AllBengaliLetterScreen";
   static const kVowelDetailsScreen = "/VowelDetailsScreen";
   static const kLearningGameButtonNavbar = "/LearningGameButtonNavbar";
+  static const kEditProfileScreen = "/EditProfileScreen";
+  static const kGamePlayNavbarScreen = "/GamePlayNavbarScreen";
 
 
 
@@ -84,6 +89,11 @@ class RouteGenerator{
 
       case kLearningGameButtonNavbar:
         return _animatedPageRoute(LearningGameButtonNavbar(index: args as int,));
+      case kEditProfileScreen:
+        return _animatedPageRoute(EditProfileScreen());
+      case kGamePlayNavbarScreen:
+        final gameList = settings.arguments as List<GameListModel>;
+        return _animatedPageRoute(GamePlayNavbarScreen(gameList: gameList));
 
 
       default:

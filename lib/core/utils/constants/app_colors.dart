@@ -12,6 +12,7 @@ class AppColors{
   // general Color
   static const Color colorBlack = Color(0xFF000000);
   static const Color colorBlack1 = Color(0xFF0F0E0E);
+  static const Color colorBlack2 = Color(0xFF070707);
   static const Color welcomeText = Color(0xFF500B0B);
   static const Color welcomeButtonColor = Color(0xFFCE4614);
   static const Color forgotPasswordColor = Color(0xFF313131);
@@ -40,6 +41,10 @@ class AppColors{
   static const Color optionContainer = Color(0xFFC4DBDE);
   static const Color parentConcernBg = Color(0xFFF6F3ED);
   static const Color exploreCardBg = Color(0xFFD9EBF1);
+  static const Color profileContainerColor = Color(0xFFFDFAFB);
+  static const Color navBarBackground = Color(0xFFFFF9C4);
+  static const Color navBarGradientStart = Color(0xFFFFF176);
+  static const Color navBarGradientEnd = Color(0xFFFFD54F);
 
   static const Color gray7 = Color(0xFFCBCBCB);
   static const Color gray3 = Color(0xFFE9E9E9);

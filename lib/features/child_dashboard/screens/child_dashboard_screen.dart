@@ -17,6 +17,7 @@ import '../widgets/game_on_container.dart';
 import '../widgets/learning_category_container.dart';
 import '../widgets/learning_status_section.dart';
 import '../widgets/practice_game_section.dart';
+import 'bottom_nav_bar.dart';
 
 class ChildDashboardScreen extends StatefulWidget {
   const ChildDashboardScreen({super.key});
@@ -29,6 +30,7 @@ class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
 
   final SharedPref _pref = getIt<SharedPref>();
    String childName="";
+
 
    @override
   void initState() {
@@ -72,7 +74,8 @@ class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
                     ),
                     ExplorePlayContainer(
                       onAlphabetClicked: (){
-                       Navigator.pushNamed(context, "/ExploreAndPlayScreen");
+                        Navigator.pushNamed(context, "/ExploreAndPlayScreen");
+
                       },
                       onNumberWidget: (){
                         Navigator.pushNamed(context, "/ExploreAndPlayNumberScreen");
@@ -86,10 +89,12 @@ class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ChildDashboardHeader(
-                          headerName: 'Practice Games',
+                          headerName: 'Games Category',
                         ),
                         InkWell(
-                          onTap: (){},
+                          onTap: (){
+                            BottomNavBarState.of(context)?.onItemTapped(1);
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               color: AppColors.exploreCardColor,
@@ -135,7 +140,7 @@ class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
                     ),
                     PracticeGameSection(),
                     SizedBox(
-                      height: ScreenUtils().screenHeight(context) * 0.03,
+                      height: ScreenUtils().screenHeight(context) * 0.02,
                     ),
                     GameOnContainer(),
                     SizedBox(

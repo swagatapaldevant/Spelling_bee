@@ -56,6 +56,115 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
 
   void onOptionSelected(String selected) {
     if (selected == currentLetter) {
+
+      // showDialog(
+      //   context: context,
+      //   barrierDismissible: false,
+      //   builder: (dialogContext) {
+      //     Future.delayed(Duration(seconds: 2), () async {
+      //       if (!mounted) return;
+      //
+      //       Navigator.of(dialogContext).pop(); // Close GIF dialog
+      //
+      //       if (!mounted) return;
+      //
+      //       if (currentIndex < widget.vowelList.length - 1) {
+      //         setState(() {
+      //           currentIndex++;
+      //           selectedWrongOption = null;
+      //         });
+      //       } else {
+      //         await Future.delayed(Duration(milliseconds: 100));
+      //
+      //         if (!mounted) return;
+      //         showDialog(
+      //           context: context,
+      //           barrierDismissible: false,
+      //           builder: (endDialogContext) => AlertDialog(
+      //             backgroundColor: Colors.lightGreen.shade50,
+      //             shape: RoundedRectangleBorder(
+      //               borderRadius: BorderRadius.circular(25),
+      //             ),
+      //             titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
+      //             contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+      //             actionsPadding: const EdgeInsets.only(bottom: 16, right: 16),
+      //             title: Row(
+      //               children: const [
+      //                 Icon(Icons.emoji_events, color: Colors.orange, size: 32),
+      //                 SizedBox(width: 10),
+      //                 Expanded(
+      //                   child: Text(
+      //                     "Congratulations !!",
+      //                     style: TextStyle(
+      //                       fontSize: 26,
+      //                       fontWeight: FontWeight.bold,
+      //                       color: Colors.green,
+      //                       fontFamily: 'comic_neue',
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //             content: Column(
+      //               mainAxisSize: MainAxisSize.min,
+      //               children: [
+      //                 const Text(
+      //                   "You have finished this game 🥳",
+      //                   style: TextStyle(
+      //                     fontSize: 20,
+      //                     fontWeight: FontWeight.w500,
+      //                     fontFamily: 'comic_neue',
+      //                   ),
+      //                   textAlign: TextAlign.center,
+      //                 ),
+      //                 const SizedBox(height: 20),
+      //                 Lottie.asset(
+      //                   'assets/images/animations/trophy.json',
+      //                   height: ScreenUtils().screenHeight(context) * 0.2,
+      //                   width: ScreenUtils().screenWidth(context) * 0.4,
+      //                   repeat: false,
+      //                 )
+      //               ],
+      //             ),
+      //             actions: [
+      //               ElevatedButton.icon(
+      //                 style: ElevatedButton.styleFrom(
+      //                   backgroundColor: Colors.orange,
+      //                   foregroundColor: Colors.white,
+      //                   shape: RoundedRectangleBorder(
+      //                     borderRadius: BorderRadius.circular(12),
+      //                   ),
+      //                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      //                 ),
+      //                 icon: const Icon(Icons.check_circle_outline),
+      //                 label: const Text(
+      //                   "Done",
+      //                   style: TextStyle(fontSize: 18),
+      //                 ),
+      //                 onPressed: () {
+      //                   if (mounted) {
+      //                     Navigator.of(endDialogContext).pop(); // Close dialog
+      //                     Navigator.of(context).pop(); // Go back
+      //                   }
+      //                 },
+      //               ),
+      //             ],
+      //           ),
+      //         );
+      //       }
+      //     });
+      //
+      //     return Center(
+      //       child: Image.asset(
+      //         'assets/images/animations/coin.gif',
+      //         height: ScreenUtils().screenHeight(context) * 0.4,
+      //         width: ScreenUtils().screenWidth(context) * 0.6,
+      //         fit: BoxFit.contain,
+      //       ),
+      //     );
+      //   },
+      // );
+
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -65,10 +174,12 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+
               Lottie.asset(
-                'assets/images/animations/correct.json',
-                height: ScreenUtils().screenHeight(context) * 0.4,
-                width: ScreenUtils().screenWidth(context) * 0.6,
+                'assets/images/animations/coin.json',
+                height: ScreenUtils().screenHeight(context) *0.8,
+                width: ScreenUtils().screenWidth(context) * 0.9,
                 repeat: false,
                 onLoaded: (composition) {
                   Future.delayed(composition.duration, () async {
@@ -166,6 +277,7 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
                   });
                 },
               ),
+
             ],
           ),
         ),

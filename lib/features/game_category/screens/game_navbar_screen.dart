@@ -1,10 +1,10 @@
-
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/commonWidgets/scrollable_game_navigation.dart';
 import 'package:spelling_bee/features/game_category/screens/game_play_screen.dart';
 import 'package:spelling_bee/features/game_category/screens/game_play_screen_one.dart';
+import 'package:spelling_bee/features/game_category/screens/game_story_screen.dart';
 import 'package:spelling_bee/features/game_category/screens/practice_game_splash.dart';
 
 import '../models/game_list_model.dart';
@@ -203,23 +203,25 @@ class _GamePlayNavbarScreenState extends State<GamePlayNavbarScreen> {
               );
               break;
 
-              case '/GamePlayScreen':
-              page = ActualGamePlayScreen(
-
+            case '/GameStoryScreen':
+              page = GameStoryScreen(
+                gameDetails: widget.gameList[index],
               );
               break;
 
-             case '/GamePlayScreenOne':
-                          page = GamePlayScreenOne(
+            case '/GamePlayScreen':
+              page = ActualGamePlayScreen();
+              break;
 
-                          );
-                          break;
+            case '/GamePlayScreenOne':
+              page = GamePlayScreenOne();
+              break;
 
             case '/':
             default:
               page = PracticeGameSplash(
                 content: widget.gameList[index].gameName.toString(),
-                index: index, 
+                index: index,
                 gameDetails: widget.gameList[index],
               );
           }

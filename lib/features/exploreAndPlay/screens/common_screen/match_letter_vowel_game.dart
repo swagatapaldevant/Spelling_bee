@@ -23,6 +23,8 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
   int currentIndex = 0;
   final FlutterTts flutterTts = FlutterTts();
   String? selectedWrongOption;
+  int wrongAttemptCount = 0;
+
 
   @override
   void initState() {
@@ -56,114 +58,6 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
 
   void onOptionSelected(String selected) {
     if (selected == currentLetter) {
-
-      // showDialog(
-      //   context: context,
-      //   barrierDismissible: false,
-      //   builder: (dialogContext) {
-      //     Future.delayed(Duration(seconds: 2), () async {
-      //       if (!mounted) return;
-      //
-      //       Navigator.of(dialogContext).pop(); // Close GIF dialog
-      //
-      //       if (!mounted) return;
-      //
-      //       if (currentIndex < widget.vowelList.length - 1) {
-      //         setState(() {
-      //           currentIndex++;
-      //           selectedWrongOption = null;
-      //         });
-      //       } else {
-      //         await Future.delayed(Duration(milliseconds: 100));
-      //
-      //         if (!mounted) return;
-      //         showDialog(
-      //           context: context,
-      //           barrierDismissible: false,
-      //           builder: (endDialogContext) => AlertDialog(
-      //             backgroundColor: Colors.lightGreen.shade50,
-      //             shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(25),
-      //             ),
-      //             titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
-      //             contentPadding: const EdgeInsets.symmetric(horizontal: 24),
-      //             actionsPadding: const EdgeInsets.only(bottom: 16, right: 16),
-      //             title: Row(
-      //               children: const [
-      //                 Icon(Icons.emoji_events, color: Colors.orange, size: 32),
-      //                 SizedBox(width: 10),
-      //                 Expanded(
-      //                   child: Text(
-      //                     "Congratulations !!",
-      //                     style: TextStyle(
-      //                       fontSize: 26,
-      //                       fontWeight: FontWeight.bold,
-      //                       color: Colors.green,
-      //                       fontFamily: 'comic_neue',
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //             content: Column(
-      //               mainAxisSize: MainAxisSize.min,
-      //               children: [
-      //                 const Text(
-      //                   "You have finished this game 🥳",
-      //                   style: TextStyle(
-      //                     fontSize: 20,
-      //                     fontWeight: FontWeight.w500,
-      //                     fontFamily: 'comic_neue',
-      //                   ),
-      //                   textAlign: TextAlign.center,
-      //                 ),
-      //                 const SizedBox(height: 20),
-      //                 Lottie.asset(
-      //                   'assets/images/animations/trophy.json',
-      //                   height: ScreenUtils().screenHeight(context) * 0.2,
-      //                   width: ScreenUtils().screenWidth(context) * 0.4,
-      //                   repeat: false,
-      //                 )
-      //               ],
-      //             ),
-      //             actions: [
-      //               ElevatedButton.icon(
-      //                 style: ElevatedButton.styleFrom(
-      //                   backgroundColor: Colors.orange,
-      //                   foregroundColor: Colors.white,
-      //                   shape: RoundedRectangleBorder(
-      //                     borderRadius: BorderRadius.circular(12),
-      //                   ),
-      //                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      //                 ),
-      //                 icon: const Icon(Icons.check_circle_outline),
-      //                 label: const Text(
-      //                   "Done",
-      //                   style: TextStyle(fontSize: 18),
-      //                 ),
-      //                 onPressed: () {
-      //                   if (mounted) {
-      //                     Navigator.of(endDialogContext).pop(); // Close dialog
-      //                     Navigator.of(context).pop(); // Go back
-      //                   }
-      //                 },
-      //               ),
-      //             ],
-      //           ),
-      //         );
-      //       }
-      //     });
-      //
-      //     return Center(
-      //       child: Image.asset(
-      //         'assets/images/animations/coin.gif',
-      //         height: ScreenUtils().screenHeight(context) * 0.4,
-      //         width: ScreenUtils().screenWidth(context) * 0.6,
-      //         fit: BoxFit.contain,
-      //       ),
-      //     );
-      //   },
-      // );
 
       showDialog(
         barrierDismissible: false,
@@ -282,14 +176,168 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
           ),
         ),
       );
-    } else {
-      setState(() => selectedWrongOption = selected);
-      Timer(const Duration(milliseconds: 500), () {
-        if (mounted) {
-          setState(() => selectedWrongOption = null);
-        }
-      });
     }
+    // else {
+    //
+    //   setState(() => selectedWrongOption = selected);
+    //   Timer(const Duration(milliseconds: 500), () {
+    //     if (mounted) {
+    //       setState(() => selectedWrongOption = null);
+    //     }
+    //   });
+    // }
+
+    else {
+      wrongAttemptCount++;
+
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (dialogContext) => Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                'assets/images/animations/try_again.json',
+                height: ScreenUtils().screenHeight(context) * 0.4,
+                width: ScreenUtils().screenWidth(context) * 0.6,
+                repeat: false,
+                onLoaded: (composition) {
+                  Future.delayed(composition.duration, () {
+                    if (!mounted) return;
+                    Navigator.of(dialogContext).pop();
+
+                    setState(() {
+                      selectedWrongOption = selected;
+                    });
+
+                    Timer(const Duration(milliseconds: 500), () {
+                      if (!mounted) return;
+
+                      setState(() {
+                        selectedWrongOption = null;
+                      });
+
+                      // Move to next question after 4 wrong attempts
+                      if (wrongAttemptCount >= 4) {
+                        wrongAttemptCount = 0;
+
+                        if (currentIndex < widget.vowelList.length - 1) {
+                          setState(() {
+                            currentIndex++;
+                          });
+                        } else {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (endDialogContext) => AlertDialog(
+                              backgroundColor: Colors.lightGreen.shade50,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                              actionsPadding: const EdgeInsets.only(bottom: 16, right: 16),
+                              title: Row(
+                                children: const [
+                                  Icon(Icons.emoji_events, color: Colors.orange, size: 32),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      "Congratulations !!",
+                                      style: TextStyle(
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green,
+                                        fontFamily: 'comic_neue',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text(
+                                    "You have finished this game 🥳",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'comic_neue',
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Lottie.asset(
+                                    'assets/images/animations/trophy.json',
+                                    height: ScreenUtils().screenHeight(context) * 0.2,
+                                    width: ScreenUtils().screenWidth(context) * 0.4,
+                                    repeat: false,
+                                  )
+                                ],
+                              ),
+                              actions: [
+                                ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.orange,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                  ),
+                                  icon: const Icon(Icons.check_circle_outline),
+                                  label: const Text(
+                                    "Done",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  onPressed: () {
+                                    if (mounted) {
+                                      Navigator.of(endDialogContext).pop();
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      }
+                    });
+                  });
+                },
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.colorTomato,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    "Please Retry again !!",
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: AppColors.white,
+                      fontFamily: "comic_neue",
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }
+
+
+
   }
 
 
@@ -371,9 +419,7 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
                                   ),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: selectedWrongOption == option
-                                          ? Colors.redAccent
-                                          : AppColors.optionContainer,
+                                      color: AppColors.optionContainer,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -403,26 +449,6 @@ class _MatchLetterVowelGameState extends State<MatchLetterVowelGame> {
                       SizedBox(height: ScreenUtils().screenHeight(context)*0.05,)
                     ],
                   ),
-                  // Positioned(
-                  //   bottom: ScreenUtils().screenWidth(context) * 0.02,
-                  //   //left: 0,
-                  //   child: Image.asset(
-                  //     "assets/images/login_bee.png",
-                  //     height: ScreenUtils().screenHeight(context) * 0.2,
-                  //     width: ScreenUtils().screenWidth(context) * 0.4,
-                  //     fit: BoxFit.contain,
-                  //   ),
-                  // ),
-                  // Positioned(
-                  //   right: ScreenUtils().screenWidth(context) * 0.02,
-                  //   bottom: ScreenUtils().screenWidth(context) * 0.07,
-                  //   child: Image.asset(
-                  //     "assets/images/match_letter/match_letter_bottom_nature.png",
-                  //     height: ScreenUtils().screenHeight(context) * 0.3,
-                  //     width: ScreenUtils().screenWidth(context) * 0.5,
-                  //     fit: BoxFit.contain,
-                  //   ),
-                  // ),
                 ],
               ),
             ),

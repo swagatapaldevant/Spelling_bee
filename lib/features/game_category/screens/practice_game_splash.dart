@@ -10,7 +10,6 @@ class PracticeGameSplash extends StatefulWidget {
   final int index;
   final GameListModel gameDetails;
 
-
   const PracticeGameSplash({
     super.key,
     required this.content,
@@ -22,7 +21,8 @@ class PracticeGameSplash extends StatefulWidget {
   State<PracticeGameSplash> createState() => _PracticeGameSplashState();
 }
 
-class _PracticeGameSplashState extends State<PracticeGameSplash> with SingleTickerProviderStateMixin {
+class _PracticeGameSplashState extends State<PracticeGameSplash>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
@@ -38,10 +38,10 @@ class _PracticeGameSplashState extends State<PracticeGameSplash> with SingleTick
     _controller.forward();
     _animateLetters();
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/GameLevelScreen', arguments: widget.gameDetails);
+      Navigator.pushReplacementNamed(context, '/GameStoryScreen',
+          arguments: widget.gameDetails);
     });
   }
-
 
   void _initAnimations() {
     _controller = AnimationController(
@@ -81,7 +81,6 @@ class _PracticeGameSplashState extends State<PracticeGameSplash> with SingleTick
       return true;
     });
   }
-
 
   @override
   void didUpdateWidget(covariant PracticeGameSplash oldWidget) {
@@ -127,17 +126,27 @@ class _PracticeGameSplashState extends State<PracticeGameSplash> with SingleTick
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: widget.content.split('').asMap().entries.map((entry) {
+                          children: widget.content
+                              .split('')
+                              .asMap()
+                              .entries
+                              .map((entry) {
                             int idx = entry.key;
                             String letter = entry.value;
 
                             return AnimatedOpacity(
-                              opacity: idx < _letterVisibility.length && _letterVisibility[idx] ? 1.0 : 0.0,
+                              opacity: idx < _letterVisibility.length &&
+                                      _letterVisibility[idx]
+                                  ? 1.0
+                                  : 0.0,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeIn,
                               child: AnimatedPadding(
                                 padding: EdgeInsets.only(
-                                  top: idx < _letterVisibility.length && _letterVisibility[idx] ? 0 : 20.0,
+                                  top: idx < _letterVisibility.length &&
+                                          _letterVisibility[idx]
+                                      ? 0
+                                      : 20.0,
                                 ),
                                 duration: const Duration(milliseconds: 300),
                                 child: Text(
@@ -165,7 +174,8 @@ class _PracticeGameSplashState extends State<PracticeGameSplash> with SingleTick
                           width: 200,
                           child: LinearProgressIndicator(
                             backgroundColor: Colors.white.withOpacity(0.3),
-                            valueColor: const AlwaysStoppedAnimation<Color>(Colors.yellow),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.yellow),
                             minHeight: 10,
                             borderRadius: BorderRadius.circular(10),
                           ),

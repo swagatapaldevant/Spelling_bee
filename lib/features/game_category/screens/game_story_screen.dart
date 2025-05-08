@@ -19,65 +19,72 @@ class _GameStoryScreenState extends State<GameStoryScreen> {
     AppDimensions.init(context);
     return Scaffold(
         body: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                height: ScreenUtils().screenHeight(context),
-                width: ScreenUtils().screenWidth(context),
-                'assets/images/forest.jpeg',
-                fit: BoxFit.cover,
-              ),
-            ),
-            SafeArea(
-              child: Padding(
-                padding:  EdgeInsets.all(AppDimensions.screenPadding),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  //crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "🌟 Timi's Magical Word Quest 🌟",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "comic_neue",
-                        color: AppColors.white.withOpacity(0.9),
-                      ),
-                    ),
-                    SizedBox(height: ScreenUtils().screenWidth(context)*0.03),
-                    Text(
-                      "Join Timi the Tiger on a magical journey to discover hidden letters, solve fun puzzles, and save the enchanted forest!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "comic_neue",
-                        color: AppColors.white.withOpacity(0.7),
-                      ),
-                    ),
-                    SizedBox(height: ScreenUtils().screenHeight(context)*0.05,),
-                    Image.asset("assets/images/boy.png",
-                    height: ScreenUtils().screenHeight(context)*0.4,
-                      width: ScreenUtils().screenWidth(context)*0.4,
-                    ),
-                    SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-                    CommonButton(
-                      onTap: (){
-                        Navigator.pushReplacementNamed(context, '/GameLevelScreen', arguments: widget.gameDetails);
-                      },
-                        height: ScreenUtils().screenHeight(context)*0.05,
-                        width: ScreenUtils().screenWidth(context),
-                        buttonColor: AppColors().colorDarkBlue,
-                        buttonName: "LET'S PLAY ",
-                        buttonTextColor: AppColors.white.withOpacity(0.9),
-                        gradientColor1: AppColors().colorDarkBlue,
-                        gradientColor2: AppColors.colorSkyBlue300)
-                  ],
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            height: ScreenUtils().screenHeight(context),
+            width: ScreenUtils().screenWidth(context),
+            'assets/images/forest.jpeg',
+            fit: BoxFit.cover,
+          ),
+        ),
+        SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(AppDimensions.screenPadding),
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "🌟 Timi's Magical Word Quest 🌟",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "comic_neue",
+                    color: AppColors.white.withOpacity(0.9),
+                  ),
                 ),
-              ),
+                SizedBox(height: ScreenUtils().screenWidth(context) * 0.03),
+                Text(
+                  "Join Timi the Tiger on a magical adventure through the enchanted forest! Discover fascinating animals, explore the wonders of nature, and help Timi protect the forest's magic.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "comic_neue",
+                    color: AppColors.white.withOpacity(0.7),
+                  ),
+                ),
+                SizedBox(
+                  height: ScreenUtils().screenHeight(context) * 0.05,
+                ),
+                Image.asset(
+                  "assets/images/boy.png",
+                  height: ScreenUtils().screenHeight(context) * 0.4,
+                  width: ScreenUtils().screenWidth(context) * 0.4,
+                ),
+                SizedBox(
+                  height: ScreenUtils().screenHeight(context) * 0.01,
+                ),
+                CommonButton(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, '/GameLevelScreen',
+                          arguments: widget.gameDetails);
+                    },
+                    height: ScreenUtils().screenHeight(context) * 0.05,
+                    width: ScreenUtils().screenWidth(context),
+                    buttonColor: AppColors().colorDarkBlue,
+                    buttonName: "LET'S PLAY ",
+                    buttonTextColor: AppColors.white.withOpacity(0.9),
+                    gradientColor1: AppColors().colorDarkBlue,
+                    gradientColor2: AppColors.colorSkyBlue300)
+              ],
             ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    ));
   }
 }

@@ -6,6 +6,7 @@ import 'package:spelling_bee/core/utils/commonWidgets/common_button.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
+import 'package:spelling_bee/features/game_category/screens/animated_earned_coined_text.dart';
 import 'package:spelling_bee/features/game_category/screens/game_category_screen.dart';
 
 class ActualGamePlayScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class ActualGamePlayScreen extends StatefulWidget {
   State<ActualGamePlayScreen> createState() => _ActualGamePlayScreenState();
 }
 
-class _ActualGamePlayScreenState extends State<ActualGamePlayScreen> {
+class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with SingleTickerProviderStateMixin {
   final List<String> imageList = [
   "https://media.istockphoto.com/id/1446199740/photo/path-through-a-sunlit-forest.jpg?s=612x612&w=0&k=20&c=DuozAED7qfI5E6PcVb4bHtFJ_uM_n1duok56j_liLEA=",
     "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZvcmVzdHxlbnwwfHwwfHx8MA%3D%3D",
@@ -76,6 +77,9 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen> {
   int correctAnswerCount = 0;
   String? selectedWrongOption;
   Key questionKey = UniqueKey();
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _opacityAnimation;
 
   void onOptionSelected(String selected) {
     final currentQuestion = forestQuizQuestions[currentQuestionIndex];
@@ -88,28 +92,59 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen> {
         context: context,
         builder: (dialogContext) => Dialog(
           backgroundColor: Colors.transparent,
-          child: Center(
-            child: Lottie.asset(
-              'assets/images/animations/coin.json',
-              repeat: false,
-              onLoaded: (composition) {
-                Future.delayed(composition.duration, () async {
-                  if (!mounted) return;
-                  Navigator.of(dialogContext).pop();
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                'assets/images/animations/earn_money.json',
+                repeat: true,
+                onLoaded: (composition) {
+                  // Future.delayed(composition.duration, () async {
+                  //   if (!mounted) return;
+                  //   Navigator.of(dialogContext).pop();
+                  //
+                  //   if (currentQuestionIndex < forestQuizQuestions.length - 1) {
+                  //     setState(() {
+                  //       currentQuestionIndex++;
+                  //       questionKey = UniqueKey();
+                  //       wrongAttemptCount = 0;
+                  //       selectedWrongOption = null;
+                  //     });
+                  //   } else {
+                  //     _showEndDialog();
+                  //   }
+                  // });
+                },
+              ),
+              AnimatedEarnedCoinsText(),
+              SizedBox(height: ScreenUtils().screenHeight(context)*0.05,),
+              CommonButton(
+                  onTap: () {
+                      if (!mounted) return;
+                      Navigator.of(dialogContext).pop();
 
-                  if (currentQuestionIndex < forestQuizQuestions.length - 1) {
-                    setState(() {
-                      currentQuestionIndex++;
-                      questionKey = UniqueKey();
-                      wrongAttemptCount = 0;
-                      selectedWrongOption = null;
-                    });
-                  } else {
-                    _showEndDialog();
-                  }
-                });
-              },
-            ),
+                      if (currentQuestionIndex < forestQuizQuestions.length - 1) {
+                        setState(() {
+                          currentQuestionIndex++;
+                          questionKey = UniqueKey();
+                          wrongAttemptCount = 0;
+                          selectedWrongOption = null;
+                        });
+                      } else {
+                        _showEndDialog();
+                      }
+                  },
+                  height: ScreenUtils().screenHeight(context) * 0.04,
+                  width: ScreenUtils().screenWidth(context)*0.5,
+                  buttonColor: AppColors().colorDarkBlue,
+                  buttonName: "Next Animal",
+                  fontSize: 16,
+                  borderRadius: 10,
+                  buttonTextColor: AppColors.white.withOpacity(0.9),
+                  gradientColor1: AppColors().colorDarkBlue,
+                  gradientColor2: AppColors.colorSkyBlue300)
+            ],
           ),
         ),
       );
@@ -260,12 +295,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen> {
                 CommonButton(
                     onTap: (){
                       Navigator.of(endDialogContext).pop();
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => GameCategoryScreen()),
-                            (route) => false,
-                      );
-
+                      Navigator.of(context).pushReplacementNamed('/GameLevelScreen');
                     },
                     height: ScreenUtils().screenHeight(context)*0.04,
                     width: ScreenUtils().screenWidth(context)*0.3,
@@ -284,6 +314,40 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.elasticOut, // playful bounce
+      ),
+    );
+
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.2, 1.0, curve: Curves.easeIn),
+      ),
+    );
+
+    // Delay the animation slightly to make it pop
+    Future.delayed(const Duration(milliseconds: 200), () {
+      _controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

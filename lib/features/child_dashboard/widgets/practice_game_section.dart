@@ -110,7 +110,7 @@ class _PracticeGameSectionState extends State<PracticeGameSection> {
           .map((x) => GameListModel.fromJson(x))
           .toList();
       Navigator.pushNamed(
-        context, "/GamePlayScreen",
+        context,  "/GamePlayNavbarScreen",
         arguments: gameListByCategory, // Excludes section headers
       );
       // languageListId.clear();

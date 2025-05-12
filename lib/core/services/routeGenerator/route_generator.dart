@@ -8,6 +8,7 @@ import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_al
 import 'package:spelling_bee/features/exploreAndPlay/screens/explore_and_play_number_screen.dart';
 import 'package:spelling_bee/features/exploreAndPlay/screens/vowel_game/vowel_details_screen.dart';
 import 'package:spelling_bee/features/game_category/models/game_list_model.dart';
+import 'package:spelling_bee/features/game_category/screens/drag_drop_alphabet_puzzle_game.dart';
 import 'package:spelling_bee/features/game_category/screens/game_navbar_screen.dart';
 import 'package:spelling_bee/features/splash/overview_screen.dart';
 import 'package:spelling_bee/features/splash/wellcome_screen.dart';
@@ -38,6 +39,7 @@ class RouteGenerator{
   static const kLearningGameButtonNavbar = "/LearningGameButtonNavbar";
   static const kEditProfileScreen = "/EditProfileScreen";
   static const kGamePlayNavbarScreen = "/GamePlayNavbarScreen";
+  static const kDragDropAlphabetPuzzleGame = "/DragDropAlphabetPuzzleGame";
 
 
 
@@ -94,6 +96,8 @@ class RouteGenerator{
       case kGamePlayNavbarScreen:
         final gameList = settings.arguments as List<GameListModel>;
         return _animatedPageRoute(GamePlayNavbarScreen(gameList: gameList));
+      case kDragDropAlphabetPuzzleGame:
+        return _animatedPageRoute(DragDropAlphabetPuzzleGame());
 
 
       default:

@@ -40,4 +40,31 @@ class AuthUsecaseImplementation extends AuthUsecase {
       return resource;
     }
   }
+
+  @override
+  Future<Resource> register(
+      {required Map<String, dynamic> requestData}) async {
+    Map<String, String> header = {};
+    Resource resource = await _apiClient.postRequest(
+        url: ApiEndPoint.register, header: header, requestData: requestData);
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+    } else {
+      return resource;
+    }
+  }
+
+
+  @override
+  Future<Resource> updateConcern(
+      {required Map<String, dynamic> requestData}) async {
+    Map<String, String> header = {};
+    Resource resource = await _apiClient.postRequest(
+        url: ApiEndPoint.concernSubmit, header: header, requestData: requestData);
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+    } else {
+      return resource;
+    }
+  }
 }

@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spelling_bee/core/utils/commonWidgets/common_button.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 import 'package:spelling_bee/features/game_category/screens/animated_earned_coined_text.dart';
-import 'package:spelling_bee/features/game_category/screens/game_category_screen.dart';
 
 class ActualGamePlayScreen extends StatefulWidget {
   const ActualGamePlayScreen({super.key});
@@ -16,9 +16,10 @@ class ActualGamePlayScreen extends StatefulWidget {
   State<ActualGamePlayScreen> createState() => _ActualGamePlayScreenState();
 }
 
-class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with SingleTickerProviderStateMixin {
+class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
+    with SingleTickerProviderStateMixin {
   final List<String> imageList = [
-  "https://media.istockphoto.com/id/1446199740/photo/path-through-a-sunlit-forest.jpg?s=612x612&w=0&k=20&c=DuozAED7qfI5E6PcVb4bHtFJ_uM_n1duok56j_liLEA=",
+    "https://media.istockphoto.com/id/1446199740/photo/path-through-a-sunlit-forest.jpg?s=612x612&w=0&k=20&c=DuozAED7qfI5E6PcVb4bHtFJ_uM_n1duok56j_liLEA=",
     "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZvcmVzdHxlbnwwfHwwfHx8MA%3D%3D",
     "https://cdn.pixabay.com/photo/2016/03/15/18/12/forest-1258845_640.jpg",
     "https://media.cntraveler.com/photos/5eb18e42fc043ed5d9779733/master/pass/BlackForest-Germany-GettyImages-147180370.jpg",
@@ -28,46 +29,53 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
   ];
 
   final List<Map<String, dynamic>> forestQuizQuestions = [
-  {
+    {
       "question": "Which animal roars loudly in the forest?",
       "options": ["সিংহ", "বানর", "হাতি", "হরিণ"],
-       "images":"https://static.vecteezy.com/system/resources/thumbnails/030/762/991/small/portrait-lion-standing-on-the-rock-with-light-exposure-ai-generative-photo.jpg",
+      "images":
+          "https://static.vecteezy.com/system/resources/thumbnails/030/762/991/small/portrait-lion-standing-on-the-rock-with-light-exposure-ai-generative-photo.jpg",
       "answerIndex": 0,
     },
     {
       "question": "Which one is green in color and found in the forest?",
       "options": ["গাছ", "পাথর", "আগুন", "পানি"],
-      "images":"https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
+      "images":
+          "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
       "answerIndex": 0,
     },
     {
       "question": "Which animal jumps from tree to tree?",
       "options": ["হাতি", "বানর", "সাপ", "পাখি"],
-      "images":"https://t4.ftcdn.net/jpg/05/29/61/37/360_F_529613760_ZN7wI9c62MyPeFC8ioliQ2wrVohVuRey.jpg",
+      "images":
+          "https://t4.ftcdn.net/jpg/05/29/61/37/360_F_529613760_ZN7wI9c62MyPeFC8ioliQ2wrVohVuRey.jpg",
       "answerIndex": 1,
     },
     {
       "question": "Who carries loads and walks slowly in the jungle?",
       "options": ["বাঘ", "সিংহ", "হাতি", "হরিণ"],
-      "images":"https://media.istockphoto.com/id/1452952557/photo/big-tusker-craig-in-amboseli-kenya-with-a-clouded-sky-in-the-background.jpg?s=612x612&w=0&k=20&c=Hs2YQUox5mIG0NJlyhqNjRklTGvkVmk_UfHs18lYg6E=",
+      "images":
+          "https://media.istockphoto.com/id/1452952557/photo/big-tusker-craig-in-amboseli-kenya-with-a-clouded-sky-in-the-background.jpg?s=612x612&w=0&k=20&c=Hs2YQUox5mIG0NJlyhqNjRklTGvkVmk_UfHs18lYg6E=",
       "answerIndex": 2,
     },
     {
       "question": "Which bird hoots at night and has big eyes?",
       "options": ["টিয়া", "পেঁচা", "কাক", "চড়ুই"],
-      "images":"https://media.istockphoto.com/id/1323187200/photo/spotted-owlet.jpg?s=612x612&w=0&k=20&c=Y0103wykL7LJBhBNUi2HH3uNlCuRZ3I2xVrZcUgryt4=",
+      "images":
+          "https://media.istockphoto.com/id/1323187200/photo/spotted-owlet.jpg?s=612x612&w=0&k=20&c=Y0103wykL7LJBhBNUi2HH3uNlCuRZ3I2xVrZcUgryt4=",
       "answerIndex": 1,
     },
     {
       "question": "Which of the following is not an animal?",
       "options": ["গাছ", "সাপ", "সিংহ", "বানর"],
-      "images":"https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
+      "images":
+          "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
       "answerIndex": 0,
     },
     {
       "question": "What do you call ‘forest’ in Bengali?",
       "options": ["নদী", "শহর", "গ্রাম", "বন"],
-      "images":"https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
+      "images":
+          "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
       "answerIndex": 3,
     },
   ];
@@ -80,13 +88,16 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
+  final FlutterTts flutterTts = FlutterTts();
 
   void onOptionSelected(String selected) {
     final currentQuestion = forestQuizQuestions[currentQuestionIndex];
-    final correctAnswer = currentQuestion['options'][currentQuestion['answerIndex']];
+    final correctAnswer =
+        currentQuestion['options'][currentQuestion['answerIndex']];
 
     if (selected == correctAnswer) {
       correctAnswerCount++;
+      speakLetter(selected);
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -118,25 +129,27 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
                 },
               ),
               AnimatedEarnedCoinsText(),
-              SizedBox(height: ScreenUtils().screenHeight(context)*0.05,),
+              SizedBox(
+                height: ScreenUtils().screenHeight(context) * 0.05,
+              ),
               CommonButton(
                   onTap: () {
-                      if (!mounted) return;
-                      Navigator.of(dialogContext).pop();
+                    if (!mounted) return;
+                    Navigator.of(dialogContext).pop();
 
-                      if (currentQuestionIndex < forestQuizQuestions.length - 1) {
-                        setState(() {
-                          currentQuestionIndex++;
-                          questionKey = UniqueKey();
-                          wrongAttemptCount = 0;
-                          selectedWrongOption = null;
-                        });
-                      } else {
-                        _showEndDialog();
-                      }
+                    if (currentQuestionIndex < forestQuizQuestions.length - 1) {
+                      setState(() {
+                        currentQuestionIndex++;
+                        questionKey = UniqueKey();
+                        wrongAttemptCount = 0;
+                        selectedWrongOption = null;
+                      });
+                    } else {
+                      _showEndDialog();
+                    }
                   },
                   height: ScreenUtils().screenHeight(context) * 0.04,
-                  width: ScreenUtils().screenWidth(context)*0.5,
+                  width: ScreenUtils().screenWidth(context) * 0.5,
                   buttonColor: AppColors().colorDarkBlue,
                   buttonName: "Next Animal",
                   fontSize: 16,
@@ -162,7 +175,8 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
             children: [
               Lottie.asset(
                 'assets/images/animations/try_again.json',
-                height: ScreenUtils().screenHeight(context) * 0.4,
+                height: ScreenUtils().screenHeight(context) * 0.3,
+                width: ScreenUtils().screenWidth(context) * 0.6,
                 repeat: false,
                 onLoaded: (composition) {
                   Future.delayed(composition.duration, () {
@@ -170,7 +184,8 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
                     Navigator.of(dialogContext).pop();
                     setState(() => selectedWrongOption = null);
                     if (wrongAttemptCount >= 4) {
-                      if (currentQuestionIndex < forestQuizQuestions.length - 1) {
+                      if (currentQuestionIndex <
+                          forestQuizQuestions.length - 1) {
                         setState(() {
                           currentQuestionIndex++;
                           questionKey = UniqueKey();
@@ -192,11 +207,11 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
                   ),
                 ),
                 child: const Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                   child: Text(
                     "Please Retry again !!",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 18,
                       color: AppColors.white,
                       fontFamily: "comic_neue",
                       fontWeight: FontWeight.w600,
@@ -272,7 +287,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonButton(
-                    onTap: (){
+                    onTap: () {
                       Navigator.of(endDialogContext).pop();
                       setState(() {
                         currentQuestionIndex = 0;
@@ -281,24 +296,24 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
                         correctAnswerCount = 0;
                         questionKey = UniqueKey();
                       });
-                      },
-                    height: ScreenUtils().screenHeight(context)*0.04,
-                    width: ScreenUtils().screenWidth(context)*0.3,
+                    },
+                    height: ScreenUtils().screenHeight(context) * 0.04,
+                    width: ScreenUtils().screenWidth(context) * 0.3,
                     buttonColor: AppColors().colorDarkBlue,
                     buttonName: "Replay ",
                     fontSize: 16,
                     borderRadius: 12,
                     buttonTextColor: AppColors.white.withOpacity(0.9),
-                    gradientColor1:AppColors.colorSkyBlue300,
+                    gradientColor1: AppColors.colorSkyBlue300,
                     gradientColor2: AppColors().colorDarkBlue),
-
                 CommonButton(
-                    onTap: (){
+                    onTap: () {
                       Navigator.of(endDialogContext).pop();
-                      Navigator.of(context).pushReplacementNamed('/GameLevelScreen');
+                      Navigator.of(context)
+                          .pushReplacementNamed('/GameLevelScreen');
                     },
-                    height: ScreenUtils().screenHeight(context)*0.04,
-                    width: ScreenUtils().screenWidth(context)*0.3,
+                    height: ScreenUtils().screenHeight(context) * 0.04,
+                    width: ScreenUtils().screenWidth(context) * 0.3,
                     buttonColor: AppColors().colorDarkBlue,
                     buttonName: "Submit ",
                     buttonTextColor: AppColors.white.withOpacity(0.9),
@@ -308,8 +323,9 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
                     gradientColor2: AppColors.colorSkyBlue300)
               ],
             ),
-            SizedBox( height: ScreenUtils().screenHeight(context) * 0.05,)
-
+            SizedBox(
+              height: ScreenUtils().screenHeight(context) * 0.05,
+            )
           ],
         ),
       ),
@@ -342,6 +358,23 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
     Future.delayed(const Duration(milliseconds: 200), () {
       _controller.forward();
     });
+
+    initTts();
+  }
+
+
+
+  void initTts() async {
+    await flutterTts.setLanguage("bn-IN");
+    await flutterTts.setSpeechRate(0.45);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.setVolume(1.0);
+    await flutterTts.awaitSpeakCompletion(true);
+  }
+
+  void speakLetter(String letter) async {
+    final pronunciation = letter;
+    await flutterTts.speak(pronunciation);
   }
 
   @override
@@ -355,7 +388,8 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
     AppDimensions.init(context);
     final question = forestQuizQuestions[currentQuestionIndex]['question'];
     final image = forestQuizQuestions[currentQuestionIndex]['images'];
-    final options = List<String>.from(forestQuizQuestions[currentQuestionIndex]['options']);
+    final options =
+        List<String>.from(forestQuizQuestions[currentQuestionIndex]['options']);
 
     return Scaffold(
       body: Stack(
@@ -371,9 +405,9 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: ScreenUtils().screenHeight(context)*0.03),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
                   _buildTitleBox(),
-                  SizedBox(height: ScreenUtils().screenHeight(context)*0.03),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
                   _buildQuizBox(question, options, image),
                 ],
               ),
@@ -390,13 +424,23 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
       width: ScreenUtils().screenWidth(context) * 0.85,
       decoration: BoxDecoration(
         color: AppColors.white.withOpacity(0.3),
-        borderRadius: const BorderRadius.only(topRight: Radius.circular(15), bottomLeft: Radius.circular(15)),
-        boxShadow: [BoxShadow(offset: Offset(0, 4), blurRadius: 4, color: AppColors.colorBlack.withOpacity(0.53))],
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(15), bottomLeft: Radius.circular(15)),
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0, 4),
+              blurRadius: 4,
+              color: AppColors.colorBlack.withOpacity(0.53))
+        ],
       ),
       child: const Center(
         child: Text(
           "Forest Quiz (Find animal)",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, fontFamily: "comic_neue", color: AppColors.white),
+          style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              fontFamily: "comic_neue",
+              color: AppColors.white),
         ),
       ),
     );
@@ -408,12 +452,18 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
       width: ScreenUtils().screenWidth(context) * 0.85,
       decoration: BoxDecoration(
         color: AppColors.white.withOpacity(0.3),
-        borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
-        boxShadow: [BoxShadow(offset: Offset(0, 4), blurRadius: 4, color: AppColors.colorBlack.withOpacity(0.53))],
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0, 4),
+              blurRadius: 4,
+              color: AppColors.colorBlack.withOpacity(0.53))
+        ],
       ),
       child: Column(
         children: [
-           SizedBox(height: ScreenUtils().screenHeight(context)*0.03),
+          SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: AnimatedSwitcher(
@@ -422,25 +472,26 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
                 question,
                 key: questionKey,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, fontFamily: "comic_neue",
-                color: AppColors.white
-                ),
+                style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "comic_neue",
+                    color: AppColors.white),
               ),
             ),
           ),
-          SizedBox(height: ScreenUtils().screenHeight(context)*0.02),
+          SizedBox(height: ScreenUtils().screenHeight(context) * 0.02),
           Container(
-           // height: ScreenUtils().screenHeight(context)*0.2,
-            width: ScreenUtils().screenWidth(context)*0.6,
+            // height: ScreenUtils().screenHeight(context)*0.2,
+            width: ScreenUtils().screenWidth(context) * 0.6,
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.white, width: 2),
-                borderRadius: BorderRadius.circular(10)
-            ),
+                border: Border.all(color: AppColors.white, width: 2),
+                borderRadius: BorderRadius.circular(10)),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(image)),
           ),
-          SizedBox(height: ScreenUtils().screenHeight(context)*0.02),
+          SizedBox(height: ScreenUtils().screenHeight(context) * 0.02),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(16),
@@ -459,20 +510,25 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>  with Singl
                   child: Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: isWrong ? AppColors.colorTomato : AppColors.optionContainer,
+                      color: isWrong
+                          ? AppColors.colorTomato
+                          : AppColors.optionContainer,
                       borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                                              BoxShadow(
-                                                offset: Offset(0, 4),
-                                                blurRadius: 4,
-                                                color: Colors.black.withOpacity(0.25),
-                                              ),
-                                            ],
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
+                          color: Colors.black.withOpacity(0.25),
+                        ),
+                      ],
                     ),
                     child: Text(
                       option,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: "comic_neue"),
+                      style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "comic_neue"),
                     ),
                   ),
                 );

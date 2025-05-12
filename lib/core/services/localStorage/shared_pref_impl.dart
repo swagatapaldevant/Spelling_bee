@@ -275,11 +275,7 @@ class SharedPrefImpl extends SharedPref {
     prefs.setBool(_premimumStatus, status);
   }
 
-  @override
-  void setUserId(int rollId) async {
-    final SharedPreferences prefs = await super.prefs;
-    prefs.setInt(_userId, rollId);
-  }
+
 
   @override
   void setFirebaseToken(String token) async {

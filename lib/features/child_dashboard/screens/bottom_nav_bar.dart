@@ -14,17 +14,13 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class BottomNavBarState extends State<BottomNavBar> {
-
   int selectedIndex = 0;
 
   final List<Widget> _pages = [
-
     ChildDashboardScreen(),
     GameCategoryScreen(),
     Center(child: Text('Achievement Page')),
-   // AchievementScreen(letter: 'B',),
     MyProfileScreens(),
-
   ];
 
   void onItemTapped(int index) {
@@ -46,7 +42,4 @@ class BottomNavBarState extends State<BottomNavBar> {
       ),
     );
   }
-
-
-
 }

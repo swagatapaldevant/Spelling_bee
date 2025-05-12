@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spelling_bee/core/network/apiHelper/locator.dart';
+import 'package:spelling_bee/core/services/localStorage/shared_pref.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,12 +11,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final SharedPref _pref = getIt<SharedPref>();
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, "/WellcomeScreen");
+      setTimerNavigation();
+      //Navigator.pushReplacementNamed(context, "/WellcomeScreen");
     });
   }
 
@@ -38,5 +42,25 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       )
     );
+  }
+
+
+  void setTimerNavigation() async {
+    String token = await _pref.getUserAuthToken();
+    bool loginStatus = await _pref.getLoginStatus();
+    String userType = await _pref.getUserType();
+
+    try {
+      if (token.length > 10 ) {
+        Navigator.pushReplacementNamed(context, "/BottomNavBar");
+      }
+      else {
+        Navigator.pushReplacementNamed(
+            context, "/WellcomeScreen");
+      }
+
+    } catch (ex) {
+      Navigator.pushReplacementNamed(context, "/WellcomeScreen");
+    }
   }
 }

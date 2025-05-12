@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:spelling_bee/core/network/apiHelper/locator.dart';
+import 'package:spelling_bee/core/services/localStorage/shared_pref.dart';
 import 'package:spelling_bee/core/utils/commonWidgets/common_button.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 
+import '../../../core/utils/commonWidgets/common_dialog.dart';
 import '../widgets/profile_header.dart';
 import '../widgets/profile_info_widget.dart';
 import '../widgets/profile_option_widget.dart';
@@ -16,6 +19,10 @@ class MyProfileScreens extends StatefulWidget {
 }
 
 class _MyProfileScreensState extends State<MyProfileScreens> {
+  final SharedPref _pref = getIt<SharedPref>();
+
+
+
   @override
   Widget build(BuildContext context) {
     AppDimensions.init(context);
@@ -64,12 +71,38 @@ class _MyProfileScreensState extends State<MyProfileScreens> {
                       ProfileOptionWidget(iconPath: "assets/images/profile/star_icon.png", title: "My Stars"),
                       ProfileOptionWidget(iconPath: "assets/images/profile/badges_icon.png", title: "Badges"),
                       ProfileOptionWidget(iconPath: "assets/images/profile/library_icon.png", title: "Word Library"),
-                      ProfileOptionWidget(iconPath: "assets/images/profile/practice_icon.png", title: "Practice Zone"),
+                      ProfileOptionWidget(
+                          iconPath: "assets/images/profile/practice_icon.png",
+                          title: "Practice Zone",
+                          onTap: (){
+                            Navigator.pushNamed(context, "/DragDropAlphabetPuzzleGame");
+                          },
+                      ),
                       ProfileOptionWidget(iconPath: "assets/images/profile/language_icon.png", title: "Choose Language"),
                       ProfileOptionWidget(iconPath: "assets/images/profile/themes_icon.png", title: "Themes"),
                       ProfileOptionWidget(iconPath: "assets/images/profile/reminders_icon.png", title: "Reminders"),
                       ProfileOptionWidget(iconPath: "assets/images/profile/clear_icon.png", title: "Clear Progress"),
-                      ProfileOptionWidget(iconPath: "assets/images/profile/logout_icon.png", title: "Log Out", isVisible: false,),
+                      ProfileOptionWidget(
+                        iconPath: "assets/images/profile/logout_icon.png",
+                        title: "Log Out",
+                        isVisible: false,
+                        onTap: (){
+                          CommonDialog(
+                              icon: Icons.logout,
+                              title: "Log Out",
+                              msg: "You are about to logout of your account. Please confirm.",
+                              activeButtonLabel: "Log Out",
+                              context: context,
+                              activeButtonOnClicked: (){
+                                _pref.clearOnLogout();
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  "/WellcomeScreen",
+                                      (Route<dynamic> route) => false, // Removes all previous routes
+                                );                  }
+                          );
+                        },
+                      ),
                       SizedBox(height: ScreenUtils().screenHeight(context)*0.04,),
                       Text(
                         "App Version 1.0 — Keep Spelling, Keep Shining! ✨",

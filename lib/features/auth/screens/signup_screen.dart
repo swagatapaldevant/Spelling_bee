@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:spelling_bee/core/network/apiHelper/locator.dart';
+import 'package:spelling_bee/core/network/apiHelper/resource.dart';
+import 'package:spelling_bee/core/network/apiHelper/status.dart';
+import 'package:spelling_bee/core/services/localStorage/shared_pref.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
+import 'package:spelling_bee/core/utils/helper/common_utils.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
+import 'package:spelling_bee/features/auth/data/auth_usecase.dart';
 
 import '../../../core/utils/commonWidgets/common_button.dart';
 import '../../../core/utils/commonWidgets/custom_textField.dart';
@@ -16,10 +22,14 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
 
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController phController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
   String? selectedGender;
   String? selectedAge;
+  bool isLoading = false;
+  final AuthUsecase _authUsecase = getIt<AuthUsecase>();
+  final SharedPref _pref = getIt<SharedPref>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,150 +51,156 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
         ),
         child: SafeArea(
-          child: Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left: AppDimensions.screenPadding,
-                  right: AppDimensions.screenPadding,
-                  top: ScreenUtils().screenHeight(context) * 0.1,
-                  bottom: AppDimensions.screenPadding,
-                ),
-                child: Container(
-                  width: double.infinity,
-                  padding:  EdgeInsets.symmetric(
-                    horizontal: AppDimensions.screenPadding,
-                    vertical: ScreenUtils().screenHeight(context) * 0.04,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: AppDimensions.screenPadding,
+                    right: AppDimensions.screenPadding,
+                    top: ScreenUtils().screenHeight(context) * 0.1,
+                    bottom: AppDimensions.screenPadding,
                   ),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 6,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    //mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Sign-Up",
-                        style: TextStyle(
-                          fontFamily: "comic_neue",
-                          fontSize: 27,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.progressBarTextColor,
+                  child: Container(
+                    width: double.infinity,
+                    padding:  EdgeInsets.symmetric(
+                      horizontal: AppDimensions.screenPadding,
+                      vertical: ScreenUtils().screenHeight(context) * 0.04,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 6,
+                          offset: Offset(0, 3),
                         ),
-                      ),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
-                      CustomTextField(controller: nameController, hintText: 'Enter your name', prefixIcon: Icons.person,),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-                      CustomTextField(controller: phController, hintText: 'Enter your Mobile number', prefixIcon: Icons.phone,),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-                      CustomTextField(controller: passwordController, hintText: 'Enter your password', prefixIcon: Icons.lock,),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-
-                      Text(
-                        "Gender ",
-                        style: TextStyle(
-                          fontFamily: "comic_neue",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.colorBlack.withOpacity(0.65),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      //mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Sign-Up",
+                          style: TextStyle(
+                            fontFamily: "comic_neue",
+                            fontSize: 27,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.progressBarTextColor,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-                      _buildGenderOption("Boy"),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-                      _buildGenderOption("Girl"),
-
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.025,),
-
-                      Text(
-                        "Age ",
-                        style: TextStyle(
-                          fontFamily: "comic_neue",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.colorBlack.withOpacity(0.65),
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
+                        CustomTextField(controller: nameController, hintText: 'Enter your name', prefixIcon: Icons.person,),
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                        CustomTextField(controller: emailController, hintText: 'Enter your email', prefixIcon: Icons.email,),
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                        CustomTextField(controller: passwordController, hintText: 'Enter your password', prefixIcon: Icons.lock,),
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        CustomTextField(controller: ageController, hintText: 'Enter your age', prefixIcon: Icons.person,),
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+            
+                        Text(
+                          "Gender ",
+                          style: TextStyle(
+                            fontFamily: "comic_neue",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.colorBlack.withOpacity(0.65),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-                      _buildAgeOption("4-6 years"),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-                      _buildAgeOption("7-9 years"),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-                      _buildAgeOption("10-14 years"),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.04,),
-
-                      Center(
-                        child: CommonButton(
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        _buildGenderOption("Boy"),
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        _buildGenderOption("Girl"),
+            
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.025,),
+            
+                        // Text(
+                        //   "Age ",
+                        //   style: TextStyle(
+                        //     fontFamily: "comic_neue",
+                        //     fontSize: 14,
+                        //     fontWeight: FontWeight.w700,
+                        //     color: AppColors.colorBlack.withOpacity(0.65),
+                        //   ),
+                        // ),
+                        // SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        // _buildAgeOption("4-6 years"),
+                        // SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        // _buildAgeOption("7-9 years"),
+                        // SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        // _buildAgeOption("10-14 years"),
+                        // SizedBox(height: ScreenUtils().screenHeight(context)*0.04,),
+            
+                        Center(
+                          child: isLoading?CircularProgressIndicator(
+                            color: AppColors.containerColor,
+                          ):CommonButton(
+                            onTap: (){
+                              registerChild();
+                            },
+                            fontSize: 16,
+                            height: ScreenUtils().screenHeight(context)*0.05,
+                            width: ScreenUtils().screenWidth(context)*0.6,
+                            buttonColor: AppColors.welcomeButtonColor,
+                            buttonName: 'Create Account', buttonTextColor: AppColors.white,
+                            gradientColor1: Color(0xffc66d32),
+                            gradientColor2: Color(0xfffed402),
+            
+                          ),
+                        ),
+                        SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        InkWell(
                           onTap: (){
-                            Navigator.pushReplacementNamed(context, "/ParentConcernScreen");
+                            Navigator.pushReplacementNamed(context, "/LoginScreen");
                           },
-                          fontSize: 16,
-                          height: ScreenUtils().screenHeight(context)*0.05,
-                          width: ScreenUtils().screenWidth(context)*0.6,
-                          buttonColor: AppColors.welcomeButtonColor,
-                          buttonName: 'Create Account', buttonTextColor: AppColors.white,
-                          gradientColor1: Color(0xffc66d32),
-                          gradientColor2: Color(0xfffed402),
-
-                        ),
-                      ),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-                      InkWell(
-                        onTap: (){
-                          Navigator.pushReplacementNamed(context, "/LoginScreen");
-                        },
-                        child: Center(
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Already have an account? ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                                color: AppColors.forgotPasswordColor,
-                                fontFamily: "comic_neue",
-                              ),
-                              children: const <TextSpan>[
-                                TextSpan(
-                                    text: 'Log in here', style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  color: AppColors.dailyStreakColor,
+                          child: Center(
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Already have an account? ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: AppColors.forgotPasswordColor,
                                   fontFamily: "comic_neue",
-                                )),
-
-                              ],
+                                ),
+                                children: const <TextSpan>[
+                                  TextSpan(
+                                      text: 'Log in here', style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: AppColors.dailyStreakColor,
+                                    fontFamily: "comic_neue",
+                                  )),
+            
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-
-
-
-                    ],
+            
+            
+            
+                      ],
+                    ),
                   ),
                 ),
-              ),
-
-              Positioned(
-                right: 0,
-                top: 0,
-                child: Image.asset(
-                  "assets/images/overview_cn.png",
-                  height: ScreenUtils().screenHeight(context) * 0.2,
-                  width: ScreenUtils().screenWidth(context) * 0.4,
-                  fit: BoxFit.contain,
+            
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Image.asset(
+                    "assets/images/overview_cn.png",
+                    height: ScreenUtils().screenHeight(context) * 0.2,
+                    width: ScreenUtils().screenWidth(context) * 0.4,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-
-            ],
+            
+              ],
+            ),
           ),
         ),
       ),
@@ -292,6 +308,62 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
+
+
+
+  registerChild() async {
+    setState(() {
+      isLoading = true;
+    });
+    //String? instituteId = await _pref.getInstituteId();
+
+    Map<String, dynamic> requestData = {
+      "email": emailController.text.trim(),
+      "name": nameController.text.trim(),
+      "userType": "child",
+      "password": passwordController.text.trim(),
+      "age": ageController.text.trim(),
+      "gender": selectedGender == "Boy"?"male":"female"
+    };
+
+    Resource resource = await _authUsecase.register(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+      _pref.setLoginStatus(true);
+      _pref.setUserAuthToken(resource.data["token"]);
+      _pref.setChildId(resource.data["userData"]["_id"].toString());
+      // _pref.setLanguageId(
+      //     resource.data["logedInUser"]["language"]["_id"].toString());
+      // _pref.setCurrentLanguageName(
+      //     resource.data["logedInUser"]["language"]["language_name"].toString());
+      _pref.setUserType(resource.data["userData"]["user_type"].toString());
+      _pref.setUserName(resource.data["userData"]["name"].toString());
+
+      List<dynamic> consentList =
+      resource.data["userData"]["parent_consent"];
+      if (consentList.length == 2 &&
+          consentList[0] == true &&
+          consentList[1] == true) {
+        setState(() {
+          isLoading = false;
+          Navigator.pushReplacementNamed(context, "/BottomNavBar");
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+          Navigator.pushReplacementNamed(context, "/ParentConcernScreen");
+        });
+      }
+
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      CommonUtils().flutterSnackBar(
+          context: context, mes: resource.message ?? "", messageType: 4);
+    }
+  }
+
 
 
 }

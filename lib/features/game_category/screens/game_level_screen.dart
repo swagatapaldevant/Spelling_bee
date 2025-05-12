@@ -344,10 +344,13 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 import 'package:spelling_bee/features/game_category/models/game_list_model.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../core/network/apiHelper/locator.dart';
 import '../../../core/network/apiHelper/resource.dart';
@@ -546,19 +549,24 @@ class _GameLevelScreenState extends State<GameLevelScreen>
                             right: isRightAligned ? 40 : 0,
                             bottom: 20,
                           ),
-                          child: LevelButton(
-                            levelNumber: gameLevelList[index].levelNumber.toString(),
-                            isRightAligned: isRightAligned,
-                            difficultyLevel: gameLevelList[index].difficulty.toString(),
-                            onPressed: () {
-                              String level = gameLevelList[index].levelNumber.toString();
-                              Navigator.pushReplacementNamed(
-                                context,
-                                level == "1"
-                                    ? '/GamePlayScreen'
-                                    : '/GamePlayScreenOne',
-                              );
-                            },
+                          child: Stack(
+                            children: [
+                              LevelButton(
+                                levelNumber: gameLevelList[index].levelNumber.toString(),
+                                isRightAligned: isRightAligned,
+                                difficultyLevel: gameLevelList[index].difficulty.toString(),
+                                onPressed: () {
+                                  String level = gameLevelList[index].levelNumber.toString();
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    level == "1"
+                                        ? '/GamePlayScreen'
+                                        : '/GamePlayScreenOne',
+                                  );
+                                },
+                              ),
+                              _lockContainer(context, isRightAligned, index==0?false:true)
+                            ],
                           ),
                         );
                       },
@@ -607,6 +615,54 @@ class _GameLevelScreenState extends State<GameLevelScreen>
 
   void _playBubbleSound() {
     // Add sound play logic here
+  }
+
+
+  Widget _lockContainer(context, bool isRightAligned, bool isVisible){
+    return Visibility(
+      visible: isVisible,
+      child: Bounceable(
+        onTap: () {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(
+              message:
+              "Please complete previous level to continue current level",
+            ),
+          );
+        },
+        child: Container(
+          height: 120,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(30),
+                bottomRight: const Radius.circular(30),
+                topRight: isRightAligned ? const Radius.circular(30) : Radius.zero,
+                bottomLeft:
+                isRightAligned ? Radius.zero : const Radius.circular(30),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.white.withOpacity(0.5),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+              // border: Border.all(
+              //   color: Colors.white.withOpacity(0.8),
+              //   width: 2,
+              // )
+          ),
+
+          child: Align(
+              alignment: isRightAligned? Alignment.topLeft:Alignment.topRight,
+              child: Padding(
+                padding:  EdgeInsets.all(ScreenUtils().screenWidth(context)*0.05),
+                child: Icon(Icons.lock, color: AppColors.white,size: 30,),
+              ))
+        ),
+      ),
+    );
   }
 
   Future<void> listOfGameLevel() async {

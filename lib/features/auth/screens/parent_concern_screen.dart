@@ -182,10 +182,20 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                         fit: BoxFit.fill,
                       ),
                       Center(
-                        child: CommonButton(
+                        child:isLoading? CircularProgressIndicator(
+                          color: AppColors.containerColor,
+                        ):CommonButton(
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, "/BottomNavBar");
-                          },
+                            if(selectedValue == "Yes" && selectedValue1 == "Yes" )
+                              {
+                                updateParentConcern();
+                              }
+                            else{
+                              CommonUtils().flutterSnackBar(
+                                  context: context, mes:"You need to accept both concern", messageType: 4);
+                            }
+
+                                                   },
                           fontSize: 16,
                           height: ScreenUtils().screenHeight(context) * 0.05,
                           width: ScreenUtils().screenWidth(context) * 0.6,
@@ -352,6 +362,40 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
           context: context, mes: resource.message ?? "", messageType: 4);
     }
   }
+
+
+  updateParentConcern() async {
+    setState(() {
+      isLoading = true;
+    });
+    String? userId = await _pref.getChildId();
+
+    Map<String, dynamic> requestData = {
+      "userId": userId,
+      "consent1": selectedValue == "Yes"?true:false,
+      "consent2": selectedValue1 == "Yes"?true:false,
+      "language": languageSelectionId
+    };
+
+    Resource resource = await _authUsecase.updateConcern(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+
+      setState(() {
+        isLoading = false;
+        Navigator.pushReplacementNamed(context, "/BottomNavBar");
+      });
+
+
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      CommonUtils().flutterSnackBar(
+          context: context, mes: resource.message ?? "", messageType: 4);
+    }
+  }
+
 
 
 }

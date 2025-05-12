@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
-import 'package:spelling_bee/core/utils/constants/app_strings_bengali.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 import 'package:spelling_bee/features/exploreAndPlay/model/alphabet_list_model.dart';
@@ -10,13 +9,9 @@ import '../../../core/network/apiHelper/locator.dart';
 import '../../../core/network/apiHelper/resource.dart';
 import '../../../core/network/apiHelper/status.dart';
 import '../../../core/services/localStorage/shared_pref.dart';
-import '../../../core/utils/commonWidgets/common_back_button.dart';
 import '../../../core/utils/helper/common_utils.dart';
 import '../data/explore_play_usecase.dart';
 import '../model/learning_alphabet_type.dart';
-import '../model/match_letter_quiz_model.dart';
-import '../widgets/bengali_word_circle.dart';
-import '../widgets/explore_screen_button.dart';
 import '../widgets/learning_game_category_section.dart';
 
 class ExploreAndPlayScreen extends StatefulWidget {

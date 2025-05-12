@@ -68,8 +68,7 @@ abstract class SharedPref {
   void setPremimumStatus(bool status);
   Future<bool> getPremimumStatus();
 
-  void setUserId(int rollId);
-  Future<int> getUserId();
+
 
   void setFirebaseToken(String token);
   Future<String> getFirebaseToken();

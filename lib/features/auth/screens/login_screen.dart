@@ -20,7 +20,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthUsecase _authUsecase = getIt<AuthUsecase>();
@@ -45,54 +44,60 @@ class _LoginScreenState extends State<LoginScreen> {
             tileMode: TileMode.mirror,
           ),
         ),
-
         child: SafeArea(
           child: Stack(
             children: [
-              
               Positioned(
                 top: 0,
                 right: 20,
-                child: Image.asset("assets/images/login_bee.png", fit: BoxFit.contain,
-                height: ScreenUtils().screenHeight(context)*0.45,
-                  width: ScreenUtils().screenWidth(context)*0.9,
+                child: Image.asset(
+                  "assets/images/login_bee.png",
+                  fit: BoxFit.contain,
+                  height: ScreenUtils().screenHeight(context) * 0.45,
+                  width: ScreenUtils().screenWidth(context) * 0.9,
                 ),
               ),
-
-
               Positioned(
                 bottom: 0,
                 child: Container(
-                  height: ScreenUtils().screenHeight(context)*0.55,
+                  height: ScreenUtils().screenHeight(context) * 0.55,
                   width: ScreenUtils().screenWidth(context),
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(ScreenUtils().screenWidth(context)*0.1),
-                      topLeft: Radius.circular(ScreenUtils().screenWidth(context)*0.1),
-                    )
-                  ),
+                        topRight: Radius.circular(
+                            ScreenUtils().screenWidth(context) * 0.1),
+                        topLeft: Radius.circular(
+                            ScreenUtils().screenWidth(context) * 0.1),
+                      )),
                   child: Padding(
-                    padding:  EdgeInsets.all(ScreenUtils().screenWidth(context)*0.05),
+                    padding: EdgeInsets.all(
+                        ScreenUtils().screenWidth(context) * 0.05),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Sign in to continue",
+                        Text(
+                          "Sign in to continue",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 24,
-                              color: AppColors.colorBlack,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                            color: AppColors.colorBlack,
                             fontFamily: "comic_neue",
-                          ),),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.04,),
-
+                          ),
+                        ),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.04,
+                        ),
                         CustomTextField(
                           controller: phoneController,
                           hintText: 'Mobile number/email',
-                          prefixIcon: Icons.phone,),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                          prefixIcon: Icons.phone,
+                        ),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         CustomTextField(
                           controller: passwordController,
                           hintText: 'Password',
@@ -100,33 +105,39 @@ class _LoginScreenState extends State<LoginScreen> {
                           suffixIcon: Icons.visibility,
                           isPassword: true,
                         ),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.04,),
-                        isLoading?CircularProgressIndicator(
-                          color: AppColors.containerColor,
-                        ): CommonButton(
-                            onTap: (){
-                              if(phoneController.text.isNotEmpty && passwordController.text.isNotEmpty)
-                                {
-                                  loginChild();
-                                }
-                              else{
-                                CommonUtils().flutterSnackBar(
-                                    context: context, mes:"Enter valid email and password", messageType: 4);
-                              }
-
-                            },
-                            fontSize: 16,
-                            height: ScreenUtils().screenHeight(context)*0.05,
-                            width: ScreenUtils().screenWidth(context)*0.7,
-                            buttonColor: AppColors.welcomeButtonColor,
-                            buttonName: 'Sign in', buttonTextColor: AppColors.white,
-                            gradientColor1: Color(0xffc66d32),
-                            gradientColor2: Color(0xfffed402),
-                           icon: Icons.arrow_forward,
-
-                          ),
-
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.04,
+                        ),
+                        isLoading
+                            ? CircularProgressIndicator(
+                                color: AppColors.containerColor,
+                              )
+                            : CommonButton(
+                                onTap: () {
+                                  if (phoneController.text.isNotEmpty &&
+                                      passwordController.text.isNotEmpty) {
+                                    loginChild();
+                                  } else {
+                                    CommonUtils().flutterSnackBar(
+                                        context: context,
+                                        mes: "Enter valid email and password",
+                                        messageType: 4);
+                                  }
+                                },
+                                fontSize: 16,
+                                height:
+                                    ScreenUtils().screenHeight(context) * 0.05,
+                                width: ScreenUtils().screenWidth(context) * 0.7,
+                                buttonColor: AppColors.welcomeButtonColor,
+                                buttonName: 'Sign in',
+                                buttonTextColor: AppColors.white,
+                                gradientColor1: Color(0xffc66d32),
+                                gradientColor2: Color(0xfffed402),
+                                icon: Icons.arrow_forward,
+                              ),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.02,
+                        ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
@@ -139,11 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
-
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.03,
+                        ),
                         InkWell(
-                          onTap: (){
-                            Navigator.pushReplacementNamed(context, "/SignupScreen");
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, "/SignupScreen");
                           },
                           child: RichText(
                             text: TextSpan(
@@ -156,24 +169,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               children: const <TextSpan>[
                                 TextSpan(
-                                    text: ' Sign up now', style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  color: AppColors.dailyStreakColor,
-                                  fontFamily: "comic_neue",
-                                )),
-
+                                    text: ' Sign up now',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: AppColors.dailyStreakColor,
+                                      fontFamily: "comic_neue",
+                                    )),
                               ],
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
                 ),
               )
-          
             ],
           ),
         ),
@@ -188,29 +199,47 @@ class _LoginScreenState extends State<LoginScreen> {
     //String? instituteId = await _pref.getInstituteId();
 
     Map<String, dynamic> requestData = {
-      "email" : phoneController.text.trim(),
+      "email": phoneController.text.trim(),
       "password": passwordController.text.trim()
     };
 
-    Resource resource =
-    await _authUsecase.logIn(requestData: requestData);
+    Resource resource = await _authUsecase.logIn(requestData: requestData);
 
     if (resource.status == STATUS.SUCCESS) {
-       _pref.setLoginStatus(true);
-       _pref.setUserAuthToken(resource.data["token"]);
-       _pref.setChildId(
-           resource.data["logedInUser"]["_id"].toString());
-       _pref.setLanguageId(resource.data["logedInUser"]["language"]["_id"].toString());
-       _pref.setCurrentLanguageName(resource.data["logedInUser"]["language"]["language_name"].toString());
-       _pref.setUserType(resource.data["logedInUser"]["user_type"].toString());
-       _pref.setUserName(resource.data["logedInUser"]["name"].toString());
-       
+      List<dynamic> consentList =
+          resource.data["logedInUser"]["parent_consent"];
+      _pref.setLoginStatus(true);
+      _pref.setUserAuthToken(resource.data["token"]);
+      _pref.setChildId(resource.data["logedInUser"]["_id"].toString());
+
+      if (consentList.length == 2 &&
+          consentList[0] == true &&
+          consentList[1] == true) {
+        _pref.setLanguageId(
+            resource.data["logedInUser"]["language"]["_id"].toString());
+        _pref.setCurrentLanguageName(resource.data["logedInUser"]["language"]
+                ["language_name"]
+            .toString());
+      }
+
+      _pref.setUserType(resource.data["logedInUser"]["user_type"].toString());
+      _pref.setUserName(resource.data["logedInUser"]["name"].toString());
+
+      if (consentList.length == 2 &&
+          consentList[0] == true &&
+          consentList[1] == true) {
+        setState(() {
+          isLoading = false;
+          Navigator.pushReplacementNamed(context, "/BottomNavBar");
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+          Navigator.pushReplacementNamed(context, "/ParentConcernScreen");
+        });
+      }
 
       //print(_pref.getUserAuthToken());
-      setState(() {
-        isLoading = false;
-        Navigator.pushReplacementNamed(context,"/BottomNavBar");
-      });
     } else {
       setState(() {
         isLoading = false;
@@ -219,7 +248,4 @@ class _LoginScreenState extends State<LoginScreen> {
           context: context, mes: resource.message ?? "", messageType: 4);
     }
   }
-
-
-
 }

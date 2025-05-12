@@ -81,7 +81,7 @@ class CustomButton extends StatelessWidget {
               text,
               style: TextStyle(fontSize: labelTextSize, fontWeight: FontWeight.w500,
               color: labelTextColor,
-                fontFamily: "Poppins"
+                fontFamily: "comic_neue"
               ),
             ),
           ],

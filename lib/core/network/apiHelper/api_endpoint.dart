@@ -15,6 +15,8 @@ class ApiEndPoint{
   //auth module
   static const languageList =  "$baseurl/language/get-delete";
   static const logIn =  "$baseurl/user/login";
+  static const register =  "$baseurl/user/register";
+  static const concernSubmit =  "$baseurl/user/consent";
 
 
   static const learningLetterType =  "$baseurl/learning-master/by-language/";

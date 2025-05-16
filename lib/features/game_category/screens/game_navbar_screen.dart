@@ -210,7 +210,9 @@ class _GamePlayNavbarScreenState extends State<GamePlayNavbarScreen> {
               break;
 
             case '/GamePlayScreen':
-              page = ActualGamePlayScreen();
+              page = ActualGamePlayScreen(
+                gameDetails: widget.gameList[index],
+              );
               break;
 
             case '/GamePlayScreenOne':

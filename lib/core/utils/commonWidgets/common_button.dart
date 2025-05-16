@@ -67,6 +67,7 @@ class CommonButton extends StatelessWidget {
           children: [
             Text(
               buttonName,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: buttonTextColor,
@@ -80,6 +81,7 @@ class CommonButton extends StatelessWidget {
             : Center(
           child: Text(
             buttonName,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.w700,
               color: buttonTextColor,

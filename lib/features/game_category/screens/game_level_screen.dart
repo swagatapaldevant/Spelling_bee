@@ -421,7 +421,7 @@ class _GameLevelScreenState extends State<GameLevelScreen>
         children: [
           Positioned.fill(
             child: Image.asset(
-              "assets/images/forest.jpeg",
+              widget.gameDetails.gameName == "Game 4"? "assets/images/forest.jpeg":"assets/images/kitchen.jpg",
               fit: BoxFit.cover,
             ),
           ),
@@ -562,6 +562,7 @@ class _GameLevelScreenState extends State<GameLevelScreen>
                                     level == "1"
                                         ? '/GamePlayScreen'
                                         : '/GamePlayScreenOne',
+                                    arguments: widget.gameDetails
                                   );
                                 },
                               ),

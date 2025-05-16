@@ -7,10 +7,13 @@ import 'package:spelling_bee/core/utils/commonWidgets/common_button.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
+import 'package:spelling_bee/features/game_category/models/game_list_model.dart';
 import 'package:spelling_bee/features/game_category/screens/animated_earned_coined_text.dart';
 
 class ActualGamePlayScreen extends StatefulWidget {
-  const ActualGamePlayScreen({super.key});
+  final GameListModel gameDetails;
+
+  const ActualGamePlayScreen({super.key, required this.gameDetails});
 
   @override
   State<ActualGamePlayScreen> createState() => _ActualGamePlayScreenState();
@@ -18,67 +21,9 @@ class ActualGamePlayScreen extends StatefulWidget {
 
 class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
     with SingleTickerProviderStateMixin {
-  final List<String> imageList = [
-    "https://media.istockphoto.com/id/1446199740/photo/path-through-a-sunlit-forest.jpg?s=612x612&w=0&k=20&c=DuozAED7qfI5E6PcVb4bHtFJ_uM_n1duok56j_liLEA=",
-    "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZvcmVzdHxlbnwwfHwwfHx8MA%3D%3D",
-    "https://cdn.pixabay.com/photo/2016/03/15/18/12/forest-1258845_640.jpg",
-    "https://media.cntraveler.com/photos/5eb18e42fc043ed5d9779733/master/pass/BlackForest-Germany-GettyImages-147180370.jpg",
-    "https://media.istockphoto.com/id/1446199740/photo/path-through-a-sunlit-forest.jpg?s=612x612&w=0&k=20&c=DuozAED7qfI5E6PcVb4bHtFJ_uM_n1duok56j_liLEA=",
-    "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZvcmVzdHxlbnwwfHwwfHx8MA%3D%3D",
-    "https://cdn.pixabay.com/photo/2016/03/15/18/12/forest-1258845_640.jpg",
-  ];
 
-  final List<Map<String, dynamic>> forestQuizQuestions = [
-    {
-      "question": "Which animal roars loudly in the forest?",
-      "options": ["সিংহ", "বানর", "হাতি", "হরিণ"],
-      "images":
-          "https://static.vecteezy.com/system/resources/thumbnails/030/762/991/small/portrait-lion-standing-on-the-rock-with-light-exposure-ai-generative-photo.jpg",
-      "answerIndex": 0,
-    },
-    {
-      "question": "Which one is green in color and found in the forest?",
-      "options": ["গাছ", "পাথর", "আগুন", "পানি"],
-      "images":
-          "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
-      "answerIndex": 0,
-    },
-    {
-      "question": "Which animal jumps from tree to tree?",
-      "options": ["হাতি", "বানর", "সাপ", "পাখি"],
-      "images":
-          "https://t4.ftcdn.net/jpg/05/29/61/37/360_F_529613760_ZN7wI9c62MyPeFC8ioliQ2wrVohVuRey.jpg",
-      "answerIndex": 1,
-    },
-    {
-      "question": "Who carries loads and walks slowly in the jungle?",
-      "options": ["বাঘ", "সিংহ", "হাতি", "হরিণ"],
-      "images":
-          "https://media.istockphoto.com/id/1452952557/photo/big-tusker-craig-in-amboseli-kenya-with-a-clouded-sky-in-the-background.jpg?s=612x612&w=0&k=20&c=Hs2YQUox5mIG0NJlyhqNjRklTGvkVmk_UfHs18lYg6E=",
-      "answerIndex": 2,
-    },
-    {
-      "question": "Which bird hoots at night and has big eyes?",
-      "options": ["টিয়া", "পেঁচা", "কাক", "চড়ুই"],
-      "images":
-          "https://media.istockphoto.com/id/1323187200/photo/spotted-owlet.jpg?s=612x612&w=0&k=20&c=Y0103wykL7LJBhBNUi2HH3uNlCuRZ3I2xVrZcUgryt4=",
-      "answerIndex": 1,
-    },
-    {
-      "question": "Which of the following is not an animal?",
-      "options": ["গাছ", "সাপ", "সিংহ", "বানর"],
-      "images":
-          "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
-      "answerIndex": 0,
-    },
-    {
-      "question": "What do you call ‘forest’ in Bengali?",
-      "options": ["নদী", "শহর", "গ্রাম", "বন"],
-      "images":
-          "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
-      "answerIndex": 3,
-    },
-  ];
+
+
 
   int currentQuestionIndex = 0;
   int wrongAttemptCount = 0;
@@ -89,6 +34,8 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
   final FlutterTts flutterTts = FlutterTts();
+  late Stopwatch _stopwatch;
+   List<Map<String, dynamic>> forestQuizQuestions=[];
 
   void onOptionSelected(String selected) {
     final currentQuestion = forestQuizQuestions[currentQuestionIndex];
@@ -227,6 +174,12 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
   }
 
   void _showEndDialog() {
+    _stopwatch.stop();
+    final elapsedTime = _stopwatch.elapsed;
+    final minutes = elapsedTime.inMinutes;
+    final seconds = elapsedTime.inSeconds % 60;
+    final formattedTime = '$minutes min $seconds sec';
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -269,6 +222,16 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
             ),
             const SizedBox(height: 20),
             Text(
+              "Time Taken: $formattedTime",
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: 'comic_neue',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            Text(
               "You have given $correctAnswerCount/${forestQuizQuestions.length} correct answer",
               style: TextStyle(
                 fontSize: 20,
@@ -295,29 +258,33 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
                         selectedWrongOption = null;
                         correctAnswerCount = 0;
                         questionKey = UniqueKey();
+                        _stopwatch.reset();
+                        _stopwatch.start();
                       });
                     },
-                    height: ScreenUtils().screenHeight(context) * 0.04,
-                    width: ScreenUtils().screenWidth(context) * 0.3,
+                    height: ScreenUtils().screenHeight(context) * 0.06,
+                    width: ScreenUtils().screenWidth(context) * 0.25,
                     buttonColor: AppColors().colorDarkBlue,
                     buttonName: "Replay ",
-                    fontSize: 16,
+                    fontSize: 15,
                     borderRadius: 12,
                     buttonTextColor: AppColors.white.withOpacity(0.9),
                     gradientColor1: AppColors.colorSkyBlue300,
                     gradientColor2: AppColors().colorDarkBlue),
                 CommonButton(
                     onTap: () {
+                      _stopwatch.reset();
+                      _stopwatch.start();
                       Navigator.of(endDialogContext).pop();
                       Navigator.of(context)
                           .pushReplacementNamed('/GameLevelScreen');
                     },
-                    height: ScreenUtils().screenHeight(context) * 0.04,
-                    width: ScreenUtils().screenWidth(context) * 0.3,
+                    height: ScreenUtils().screenHeight(context) * 0.06,
+                    width: ScreenUtils().screenWidth(context) * 0.4,
                     buttonColor: AppColors().colorDarkBlue,
-                    buttonName: "Submit ",
+                    buttonName: "Proceed to next Level",
                     buttonTextColor: AppColors.white.withOpacity(0.9),
-                    fontSize: 16,
+                    fontSize: 15,
                     borderRadius: 12,
                     gradientColor1: AppColors().colorDarkBlue,
                     gradientColor2: AppColors.colorSkyBlue300)
@@ -359,7 +326,110 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
       _controller.forward();
     });
 
+    _stopwatch = Stopwatch()..start();
     initTts();
+    forestQuizQuestions = widget.gameDetails.gameName=="Game 4"?[
+      {
+        "question": "Which animal roars loudly in the forest?",
+        "options": ["সিংহ", "বানর", "হাতি", "হরিণ"],
+        "images":
+        "https://static.vecteezy.com/system/resources/thumbnails/030/762/991/small/portrait-lion-standing-on-the-rock-with-light-exposure-ai-generative-photo.jpg",
+        "answerIndex": 0,
+      },
+      {
+        "question": "Which one is green in color and found in the forest?",
+        "options": ["গাছ", "পাথর", "আগুন", "পানি"],
+        "images":
+        "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
+        "answerIndex": 0,
+      },
+      {
+        "question": "Which animal jumps from tree to tree?",
+        "options": ["হাতি", "বানর", "সাপ", "পাখি"],
+        "images":
+        "https://t4.ftcdn.net/jpg/05/29/61/37/360_F_529613760_ZN7wI9c62MyPeFC8ioliQ2wrVohVuRey.jpg",
+        "answerIndex": 1,
+      },
+      {
+        "question": "Who carries loads and walks slowly in the jungle?",
+        "options": ["বাঘ", "সিংহ", "হাতি", "হরিণ"],
+        "images":
+        "https://media.istockphoto.com/id/1452952557/photo/big-tusker-craig-in-amboseli-kenya-with-a-clouded-sky-in-the-background.jpg?s=612x612&w=0&k=20&c=Hs2YQUox5mIG0NJlyhqNjRklTGvkVmk_UfHs18lYg6E=",
+        "answerIndex": 2,
+      },
+      {
+        "question": "Which bird hoots at night and has big eyes?",
+        "options": ["টিয়া", "পেঁচা", "কাক", "চড়ুই"],
+        "images":
+        "https://media.istockphoto.com/id/1323187200/photo/spotted-owlet.jpg?s=612x612&w=0&k=20&c=Y0103wykL7LJBhBNUi2HH3uNlCuRZ3I2xVrZcUgryt4=",
+        "answerIndex": 1,
+      },
+      {
+        "question": "Which of the following is not an animal?",
+        "options": ["গাছ", "সাপ", "সিংহ", "বানর"],
+        "images":
+        "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
+        "answerIndex": 0,
+      },
+      {
+        "question": "What do you call ‘forest’ in Bengali?",
+        "options": ["নদী", "শহর", "গ্রাম", "বন"],
+        "images":
+        "https://images.pexels.com/photos/53435/tree-oak-landscape-view-53435.jpeg?cs=srgb&dl=pexels-pixabay-53435.jpg&fm=jpg",
+        "answerIndex": 3,
+      },
+    ]:
+    [
+      {
+        "question": "Which item is used to cook food in the kitchen?",
+        "options": ["বিছানা", "চুলা", "টেবিল", "টিভি"],
+        "images":
+    "https://5.imimg.com/data5/SELLER/Default/2023/1/NX/ZC/UD/3446735/c1-.jpg",
+        "answerIndex": 1,
+      },
+      {
+        "question": "Which one is used to keep food cold?",
+        "options": ["ফ্রিজ", "প্লেট", "কাপড়", "ঘড়ি"],
+        "images":
+        "https://media.istockphoto.com/id/842160124/photo/refrigerator-with-fruits-and-vegetables.jpg?s=612x612&w=0&k=20&c=j0W4TPOevBpp3mS6_X2FHV1uWVl3fcfdGAt2X3l8XzE=",
+        "answerIndex": 0,
+      },
+      {
+        "question": "Which of these is used to eat rice?",
+        "options": ["চামচ", "বালিশ", "কলম", "চশমা"],
+        "images":
+        "https://t3.ftcdn.net/jpg/02/75/16/00/360_F_275160059_SkK5HApn4AduORNqJeZnhiN7AuMDGHeZ.jpg",
+        "answerIndex": 0,
+      },
+      {
+        "question": "Where do we wash our hands in the kitchen?",
+        "options": ["টেবিল", "সিংক", "খাট", "সোপা"],
+        "images":
+        "https://media.istockphoto.com/id/501599719/photo/washbasin-in-a-kitchen.jpg?s=612x612&w=0&k=20&c=_RsigaWska1w8MToFcKpOrIUyi8KXem82LZxGopRtTc=",
+        "answerIndex": 1,
+      },
+      {
+        "question": "Which one is used to cook rice?",
+        "options": ["চা কাপ", "চামচ", "রাইস কুকার", "ঘড়ি"],
+        "images":
+        "https://media.istockphoto.com/id/1218421458/photo/kitchen-equipment-automatic-rice-cooker-gray.jpg?s=612x612&w=0&k=20&c=TSKGqJ5lrQgV6B2tSQ4Usj99lvPk_v1lndrpdoAY7Ac=",
+        "answerIndex": 2,
+      },
+      {
+        "question": "Which item do we sit on in the dining room?",
+        "options": ["চেয়ার", "চামচ", "কাপড়", "রেফ্রিজারেটর"],
+        "images":
+        "https://supremefurniture.co.in/cdn/shop/files/Ornate-Red-Black.jpg?v=1706170905",
+        "answerIndex": 0,
+      },
+      {
+        "question": "Which of these is not used in cooking?",
+        "options": ["চুলা", "বালিশ", "ফ্রাইং প্যান", "হাড়ি"],
+        "images":
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvmMOKx6fT5oZqEbcsd6RII2JabhXfdEM9rw&s",
+        "answerIndex": 1,
+      },
+    ];
   }
 
 
@@ -395,7 +465,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
       body: Stack(
         children: [
           Image.asset(
-            "assets/images/forest.jpeg",
+           widget.gameDetails.gameName == "Game 4"? "assets/images/forest.jpeg":"assets/images/kitchen.jpg",
             width: ScreenUtils().screenWidth(context),
             height: ScreenUtils().screenHeight(context),
             fit: BoxFit.cover,
@@ -433,9 +503,9 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
               color: AppColors.colorBlack.withOpacity(0.53))
         ],
       ),
-      child: const Center(
+      child:  Center(
         child: Text(
-          "Forest Quiz (Find animal)",
+          widget.gameDetails.gameName == "Game 4"? "Forest Quiz (Find animal)":"Kitchen Quiz(Find utensils)",
           style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w600,

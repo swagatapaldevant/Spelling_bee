@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:spelling_bee/features/achievements/screens/achievement_screen.dart';
 import 'package:spelling_bee/features/game_category/screens/game_category_screen.dart';
 
@@ -15,7 +17,7 @@ class BottomNavBar extends StatefulWidget {
 
 class BottomNavBarState extends State<BottomNavBar> {
   int selectedIndex = 0;
-
+  DateTime? currentBackPressTime;
   final List<Widget> _pages = [
     ChildDashboardScreen(),
     GameCategoryScreen(),
@@ -34,11 +36,25 @@ class BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[selectedIndex],
-      bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: selectedIndex,
-        onItemTapped: onItemTapped,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        DateTime now = DateTime.now();
+        if (didPop || currentBackPressTime == null ||
+            now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+          currentBackPressTime = now;
+          Fluttertoast.showToast(msg: 'Tap back again to Exit');
+          // return false;
+        }else{
+          SystemNavigator.pop();
+        }
+      },
+      child: Scaffold(
+        body: _pages[selectedIndex],
+        bottomNavigationBar: CustomBottomNavBar(
+          selectedIndex: selectedIndex,
+          onItemTapped: onItemTapped,
+        ),
       ),
     );
   }

@@ -17,8 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      setTimerNavigation();
-      //Navigator.pushReplacementNamed(context, "/WellcomeScreen");
+      //setTimerNavigation();
+      Navigator.pushReplacementNamed(context, "/WellcomeScreen");
     });
   }
 

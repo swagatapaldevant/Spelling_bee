@@ -4,12 +4,14 @@ class GameCategoryModel {
   Language? language;
   String? description;
   String? createdAt;
+  int? gameCount;
 
   GameCategoryModel(
       {this.sId,
         this.gameCategoryName,
         this.language,
         this.description,
+        this.gameCount,
         this.createdAt});
 
   GameCategoryModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class GameCategoryModel {
         : null;
     description = json['description'];
     createdAt = json['createdAt'];
+    gameCount = json['gameCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +34,7 @@ class GameCategoryModel {
     }
     data['description'] = this.description;
     data['createdAt'] = this.createdAt;
+    data['gameCount'] = this.gameCount;
     return data;
   }
 }

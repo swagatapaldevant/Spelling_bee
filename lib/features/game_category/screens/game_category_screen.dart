@@ -4,6 +4,8 @@ import 'package:spelling_bee/core/services/localStorage/shared_pref.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/features/game_category/data/game_category_usecase.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../core/network/apiHelper/resource.dart';
 import '../../../core/network/apiHelper/status.dart';
 import '../../../core/utils/helper/common_utils.dart';
@@ -89,17 +91,27 @@ class _GameCategoryScreenState extends State<GameCategoryScreen> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
                         childAspectRatio: 0.9,
-                        mainAxisExtent: 180, // Fixed height for each item
+                        //mainAxisExtent: 180, // Fixed height for each item
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                           return AnimatedGameItem(
                             index: index,
                             onTap: () {
-                              listOfGameByCategory(gameCategoryList[index].sId.toString());
+
+                              gameCategoryList[index].gameCount!>0?
+                              listOfGameByCategory(gameCategoryList[index].sId.toString()):
+                              showTopSnackBar(
+                                Overlay.of(context),
+                                CustomSnackBar.error(
+                                  message:
+                                  "No game available in this category",
+                                ),
+                              );
+
                             },
                             gameName: gameCategoryList[index].gameCategoryName.toString(),
                           );
@@ -169,7 +181,7 @@ class _GameCategoryScreenState extends State<GameCategoryScreen> {
 
   listOfGameByCategory(String categoryId) async {
     setState(() {
-      //isLoading = true;
+      isLoading = true;
     });
 
     Map<String, dynamic> requestData = {

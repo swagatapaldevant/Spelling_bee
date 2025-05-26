@@ -210,8 +210,11 @@ class _GamePlayNavbarScreenState extends State<GamePlayNavbarScreen> {
               break;
 
             case '/GamePlayScreen':
+              final args = settings.arguments as Map<String, dynamic>;
               page = ActualGamePlayScreen(
-                gameDetails: widget.gameList[index],
+                gameDetails: args['gameDetails'],
+                levelId: args['levelId'],
+                gamePoint: args['gamePoint'],
               );
               break;
 

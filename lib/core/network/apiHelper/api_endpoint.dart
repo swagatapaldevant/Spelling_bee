@@ -10,7 +10,12 @@ class ApiEndPoint{
   ApiEndPoint._internal();
 
   //static const baseurl = "http://192.168.29.243:8001/api";
-  static const baseurl = "https://thecityofjoy.in/spelling_bee_backend/api";
+  //static const baseurl = "https://thecityofjoy.in/spelling_bee_backend/api";
+  static const baseurl = "http://192.168.29.106:5003/api";
+
+  static const domain  = "http://192.168.29.106:5003";
+
+
 
   //auth module
   static const languageList =  "$baseurl/language/get-delete";
@@ -27,6 +32,8 @@ class ApiEndPoint{
   static const gameCategory =  "$baseurl/game-category/by-language/";
   static const gameListByCategory =  "$baseurl/game/get-by-category-id/";
   static const gameLevelByGame =  "$baseurl/game-level/get-game-level-by-game-id/";
+  static const gameQuestionAnswer =  "$baseurl/game-details/start-game-question-answer";
+  static const gameSubmit =  "$baseurl/game-details/userwise-game-level-save";
 
 
 

@@ -11,56 +11,47 @@ class GameQuestion {
 }
 
 
-final Map<int, List<GameQuestion>> gameQuestions = {
-  0: [
-    GameQuestion(
-      question: "Match the letter with sound 'A'",
-      options: ["অ", "আ", "ই", "উ"],
-      answer: "অ",
-    ),
-    GameQuestion(
-      question: "Find the correct spelling for 'Apple'",
-      options: ["অ্যাপেল", "আপেল", "অপেল", "অপেল্ল"],
-      answer: "আপেল",
-    ),
-  ],
-  1: [
-    GameQuestion(
-      question: "Spell 'Cat'",
-      options: ["ক্যাট", "কেট", "কেট্ট", "ক্যেট"],
-      answer: "ক্যাট",
-    ),
-  ],
-  2: [
-    GameQuestion(
-      question: "Which letter comes after ক?",
-      options: ["খ", "ঘ", "গ", "চ"],
-      answer: "খ",
-    ),
-  ],
-  3: [
-    GameQuestion(
-      question: "Match the letter with sound 'A'",
-      options: ["অ", "আ", "ই", "উ"],
-      answer: "অ",
-    ),
-    GameQuestion(
-      question: "Find the correct spelling for 'Apple'",
-      options: ["অ্যাপেল", "আপেল", "অপেল", "অপেল্ল"],
-      answer: "আপেল",
-    ),
-  ],
-  4: [
-    GameQuestion(
-      question: "Match the letter with sound 'A'",
-      options: ["অ", "আ", "ই", "উ"],
-      answer: "অ",
-    ),
-    GameQuestion(
-      question: "Find the correct spelling for 'Apple'",
-      options: ["অ্যাপেল", "আপেল", "অপেল", "অপেল্ল"],
-      answer: "আপেল",
-    ),
-  ],
-  // Add more games similarly...
-};
+class QuestionDetailsModel {
+  String? sId;
+  String? gameId;
+  String? levelId;
+  String? question;
+  List<String>? answer;
+  String? correctAnswer;
+  String? image;
+  String? createdAt;
+
+  QuestionDetailsModel(
+      {this.sId,
+        this.gameId,
+        this.levelId,
+        this.question,
+        this.answer,
+        this.correctAnswer,
+        this.image,
+        this.createdAt});
+
+  QuestionDetailsModel.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    gameId = json['game_id'];
+    levelId = json['level_id'];
+    question = json['question'];
+    answer = json['answer'].cast<String>();
+    correctAnswer = json['correct_answer'];
+    image = json['image'];
+    createdAt = json['createdAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['game_id'] = this.gameId;
+    data['level_id'] = this.levelId;
+    data['question'] = this.question;
+    data['answer'] = this.answer;
+    data['correct_answer'] = this.correctAnswer;
+    data['image'] = this.image;
+    data['createdAt'] = this.createdAt;
+    return data;
+  }
+}

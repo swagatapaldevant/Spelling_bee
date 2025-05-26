@@ -145,7 +145,8 @@ class _AnimatedGameItemState extends State<AnimatedGameItem>
                       child: Image.asset(
                         widget.index%2 == 0?
                         "assets/images/level_1.png":"assets/images/level_2.png",
-                        height: isSmallScreen ? ScreenUtils().screenHeight(context)*0.08 : ScreenUtils().screenHeight(context)*0.15,
+                        width: ScreenUtils().screenWidth(context)*0.3,
+                        height: isSmallScreen ? ScreenUtils().screenHeight(context)*0.07 : ScreenUtils().screenHeight(context)*0.1,
                       ),
                     ),
 

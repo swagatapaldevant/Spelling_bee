@@ -95,6 +95,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:spelling_bee/core/network/apiHelper/api_endpoint.dart';
 import 'package:spelling_bee/core/utils/commonWidgets/common_button.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
@@ -115,17 +116,15 @@ class _GameStoryScreenState extends State<GameStoryScreen> {
     AppDimensions.init(context);
     final screenHeight = ScreenUtils().screenHeight(context);
     final screenWidth = ScreenUtils().screenWidth(context);
-    final backgroundImage = widget.gameDetails.gameName == "Game 4"
-        ? 'assets/images/forest.jpeg'
-        : 'assets/images/kitchen.jpg';
+    final backgroundImage = widget.gameDetails.backgroundImage??"";
 
     return Scaffold(
       body: Stack(
         children: [
           // Full-screen background image
           Positioned.fill(
-            child: Image.asset(
-              backgroundImage,
+            child: Image.network(
+              ApiEndPoint.domain+backgroundImage,
               fit: BoxFit.cover,
             ),
           ),
@@ -162,7 +161,8 @@ class _GameStoryScreenState extends State<GameStoryScreen> {
                     child: Column(
                       children: [
                         Text(
-                          widget.gameDetails.gameName == "Game 4"?  "🌟 Timi's Magical Word Quest 🌟":"🌟 Timi's Kitchen 🌟",
+                          widget.gameDetails.storyTitle.toString(),
+                          //widget.gameDetails.gameName == "Game 4"?  "🌟 Timi's Magical Word Quest 🌟":"🌟 Timi's Kitchen 🌟",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 26,
@@ -173,9 +173,10 @@ class _GameStoryScreenState extends State<GameStoryScreen> {
                         ),
                         SizedBox(height: screenWidth * 0.03),
                         Text(
-                          widget.gameDetails.gameName == "Game 4"?
-                          "Join Timi the Tiger on a magical adventure through the enchanted forest! Discover fascinating animals, explore the wonders of nature, and help Timi protect the forest's magic.":
-                          "Join Timi the Tiger in a tasty kitchen quest to find secret ingredients and cook up magical recipes!",
+                          widget.gameDetails.storyDescription.toString(),
+                          // widget.gameDetails.gameName == "Game 4"?
+                          // "Join Timi the Tiger on a magical adventure through the enchanted forest! Discover fascinating animals, explore the wonders of nature, and help Timi protect the forest's magic.":
+                          // "Join Timi in a tasty kitchen quest to find secret ingredients and cook up magical recipes!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 18,

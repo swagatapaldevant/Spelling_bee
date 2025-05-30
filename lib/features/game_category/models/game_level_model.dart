@@ -1,100 +1,56 @@
 class GameLevelModel {
+  String? icon;
   String? sId;
-  GameId? gameId;
+  String? gameId;
   int? levelNumber;
   String? difficulty;
   String? description;
   String? point;
-  String? icon;
   String? createdAt;
+  String? updatedAt;
+  int? iV;
+  int? collectedPoints;
 
   GameLevelModel(
-      {this.sId,
+      {this.icon,
+        this.sId,
         this.gameId,
         this.levelNumber,
         this.difficulty,
         this.description,
         this.point,
-        this.icon,
-        this.createdAt});
+        this.createdAt,
+        this.updatedAt,
+        this.iV,
+        this.collectedPoints});
 
   GameLevelModel.fromJson(Map<String, dynamic> json) {
+    icon = json['icon'];
     sId = json['_id'];
-    gameId =
-    json['game_id'] != null ? new GameId.fromJson(json['game_id']) : null;
+    gameId = json['game_id'];
     levelNumber = json['level_number'];
     difficulty = json['difficulty'];
     description = json['description'];
     point = json['point'];
-    icon = json['icon'];
     createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+    collectedPoints = json['collected_points'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['icon'] = this.icon;
     data['_id'] = this.sId;
-    if (this.gameId != null) {
-      data['game_id'] = this.gameId!.toJson();
-    }
+    data['game_id'] = this.gameId;
     data['level_number'] = this.levelNumber;
     data['difficulty'] = this.difficulty;
     data['description'] = this.description;
     data['point'] = this.point;
-    data['icon'] = this.icon;
     data['createdAt'] = this.createdAt;
-    return data;
-  }
-}
-
-class GameId {
-  String? sId;
-  String? gameName;
-  String? icon;
-  String? backgroundImage;
-  String? storyTitle;
-  String? storyDescription;
-  String? gameCategoryId;
-  String? description;
-  String? mechanismId;
-  String? createdAt;
-
-  GameId(
-      {this.sId,
-        this.gameName,
-        this.icon,
-        this.backgroundImage,
-        this.storyTitle,
-        this.storyDescription,
-        this.gameCategoryId,
-        this.description,
-        this.mechanismId,
-        this.createdAt});
-
-  GameId.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    gameName = json['game_name'];
-    icon = json['icon'];
-    backgroundImage = json['background_image'];
-    storyTitle = json['story_title'];
-    storyDescription = json['story_description'];
-    gameCategoryId = json['game_category_id'];
-    description = json['description'];
-    mechanismId = json['mechanism_id'];
-    createdAt = json['createdAt'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['game_name'] = this.gameName;
-    data['icon'] = this.icon;
-    data['background_image'] = this.backgroundImage;
-    data['story_title'] = this.storyTitle;
-    data['story_description'] = this.storyDescription;
-    data['game_category_id'] = this.gameCategoryId;
-    data['description'] = this.description;
-    data['mechanism_id'] = this.mechanismId;
-    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
+    data['collected_points'] = this.collectedPoints;
     return data;
   }
 }

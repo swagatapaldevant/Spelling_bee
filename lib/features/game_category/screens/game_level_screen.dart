@@ -8,7 +8,6 @@ import 'package:spelling_bee/features/game_category/models/game_level_track_mode
 import 'package:spelling_bee/features/game_category/models/game_list_model.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
 import '../../../core/network/apiHelper/locator.dart';
 import '../../../core/network/apiHelper/resource.dart';
 import '../../../core/network/apiHelper/status.dart';
@@ -66,6 +65,7 @@ class _GameLevelScreenState extends State<GameLevelScreen>
     });
 
     listOfGameLevel();
+    _animationLoader();
   }
 
   @override
@@ -249,9 +249,12 @@ class _GameLevelScreenState extends State<GameLevelScreen>
                                               .point
                                               .toString(),
                                         ),
-                                        _lockContainer(context, isRightAligned,
-                                            index == 1 ? false : true)
-                                        //_lockContainer(context, isRightAligned, unlockedIndex[index] == index?false:true)
+                                        _lockContainer(
+                                            context,
+                                            isRightAligned,
+                                            isLevelUnlocked(index)
+                                                ? false
+                                                : true)
                                       ],
                                     ),
                                   );
@@ -382,20 +385,6 @@ class _GameLevelScreenState extends State<GameLevelScreen>
         totalPoints =
             totalPoints + int.parse(gameLevelList[i].point.toString());
       }
-
-      // for(int i = 0 ; i<gameLevelList.length;i++)
-      //   {
-      //     if(gameLevelList[i].sId.toString() == gameTrackingDetails[i].sId.toString())
-      //       {
-      //         double p1 = int.parse(gameLevelList[i].point.toString()) as double;
-      //         double p2 = int.parse(gameTrackingDetails[i].collectedPoints.toString()) as double;
-      //         if(((p1/p2)*100)>50)
-      //           {
-      //             unlockedIndex.add(i);
-      //           }
-      //
-      //       }
-      //   }
     } else {
       CommonUtils().flutterSnackBar(
         context: context,
@@ -405,5 +394,27 @@ class _GameLevelScreenState extends State<GameLevelScreen>
     }
 
     setState(() => isLoading = false);
+  }
+
+  bool isLevelUnlocked(int index) {
+    if (index == 0) return true;
+    if (index >= gameLevelList.length) return false;
+    int previousCollected =
+        int.parse(gameLevelList[index - 1].collectedPoints.toString());
+    int previousTotal = int.parse(gameLevelList[index - 1].point.toString());
+    double completionPercent = (previousCollected / previousTotal) * 100;
+    return completionPercent > 50;
+  }
+
+  Widget _animationLoader()
+  {
+    return Center(
+      child: Lottie.asset(
+        'assets/images/animations/earn_money.json',
+        repeat: true,
+        onLoaded: (composition) {
+        },
+      ),
+    );
   }
 }

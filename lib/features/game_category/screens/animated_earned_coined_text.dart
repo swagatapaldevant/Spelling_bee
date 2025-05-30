@@ -6,7 +6,8 @@ class AnimatedEarnedCoinsText extends StatefulWidget {
   const AnimatedEarnedCoinsText({super.key});
 
   @override
-  _AnimatedEarnedCoinsTextState createState() => _AnimatedEarnedCoinsTextState();
+  _AnimatedEarnedCoinsTextState createState() =>
+      _AnimatedEarnedCoinsTextState();
 }
 
 class _AnimatedEarnedCoinsTextState extends State<AnimatedEarnedCoinsText>
@@ -29,7 +30,9 @@ class _AnimatedEarnedCoinsTextState extends State<AnimatedEarnedCoinsText>
     );
 
     _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.2, 1.0, curve: Curves.easeIn)),
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0.2, 1.0, curve: Curves.easeIn)),
     );
 
     _controller.forward();
@@ -49,19 +52,17 @@ class _AnimatedEarnedCoinsTextState extends State<AnimatedEarnedCoinsText>
         opacity: _opacityAnimation,
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.colorBlack,
-borderRadius: BorderRadius.only(
-  topRight: Radius.circular(10),
-  bottomLeft: Radius.circular(10),
-)
-          ),
+              color: AppColors.colorBlack,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              )),
           child: Padding(
-            padding:  EdgeInsets.symmetric(
-                horizontal:ScreenUtils().screenWidth(context)*0.05,
-                vertical: ScreenUtils().screenWidth(context)*0.02
-            ),
+            padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtils().screenWidth(context) * 0.05,
+                vertical: ScreenUtils().screenWidth(context) * 0.02),
             child: Text(
-              "Earned 5 Coins",
+              "Well Done 👍",
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

@@ -24,7 +24,10 @@ class ActualGamePlayScreen extends StatefulWidget {
   final int gamePoint;
 
   const ActualGamePlayScreen(
-      {super.key, required this.gameDetails, required this.levelId, required this.gamePoint});
+      {super.key,
+      required this.gameDetails,
+      required this.levelId,
+      required this.gamePoint});
 
   @override
   State<ActualGamePlayScreen> createState() => _ActualGamePlayScreenState();
@@ -36,6 +39,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
   int currentQuestionIndex = 0;
   int wrongAttemptCount = 0;
   int correctAnswerCount = 0;
+  int wrongAnswerCount = 0;
   String? selectedWrongOption;
   Key questionKey = UniqueKey();
   late AnimationController _controller;
@@ -54,7 +58,8 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
 
     if (selected == correctAnswer) {
       correctAnswerCount++;
-      speakLetter(selected);
+      speakLetter("WellDone, You choose write option $selected");
+      //speakLetter(selected);
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -65,7 +70,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Lottie.asset(
-                'assets/images/animations/earn_money.json',
+                'assets/images/animations/welldone.json',
                 repeat: true,
                 onLoaded: (composition) {
                   // Future.delayed(composition.duration, () async {
@@ -119,6 +124,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
         ),
       );
     } else {
+      speakLetter("Good Try, $selected is not correct option");
       wrongAttemptCount++;
       setState(() => selectedWrongOption = selected);
 
@@ -136,21 +142,22 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
                 width: ScreenUtils().screenWidth(context) * 0.6,
                 repeat: false,
                 onLoaded: (composition) {
-                  Future.delayed(composition.duration, () {
+                  //composition.duration
+                  Future.delayed(Duration(seconds: 4), () {
                     if (!mounted) return;
                     Navigator.of(dialogContext).pop();
                     setState(() => selectedWrongOption = null);
-                    if (wrongAttemptCount >= 4) {
-                      if (currentQuestionIndex < gameQuestionList.length - 1) {
-                        setState(() {
-                          currentQuestionIndex++;
-                          questionKey = UniqueKey();
-                          wrongAttemptCount = 0;
-                        });
-                      } else {
-                        _showEndDialog();
-                      }
+                    // if (wrongAttemptCount >= 4) {
+                    if (currentQuestionIndex < gameQuestionList.length - 1) {
+                      setState(() {
+                        currentQuestionIndex++;
+                        questionKey = UniqueKey();
+                        wrongAttemptCount = 0;
+                      });
+                    } else {
+                      _showEndDialog();
                     }
+                    // }
                   });
                 },
               ),
@@ -165,7 +172,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                   child: Text(
-                    "Please Retry again !!",
+                    "Good Try !!",
                     style: TextStyle(
                       fontSize: 18,
                       color: AppColors.white,
@@ -252,7 +259,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
               'assets/images/animations/trophy.json',
               height: ScreenUtils().screenHeight(context) * 0.2,
               width: ScreenUtils().screenWidth(context) * 0.4,
-              repeat: false,
+              repeat: true,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -266,6 +273,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
                         selectedWrongOption = null;
                         correctAnswerCount = 0;
                         questionKey = UniqueKey();
+                        gameQuestionList.shuffle();
                         _stopwatch.reset();
                         _stopwatch.start();
                       });
@@ -533,6 +541,9 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
       gameQuestionList = (resource.data as List)
           .map((x) => QuestionDetailsModel.fromJson(x))
           .toList();
+
+      gameQuestionList.shuffle();
+
     } else {
       CommonUtils().flutterSnackBar(
         context: context,
@@ -554,9 +565,11 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
       "user_id": userId,
       "game_id": widget.gameDetails.sId,
       "level_id": widget.levelId,
-      "time_taken":secondCount,
+      "time_taken": secondCount,
       "corrected_answer": correctAnswerCount.toString(),
-      "collected_points": (widget.gamePoint/int.parse(gameQuestionList.length.toString()))*correctAnswerCount
+      "collected_points":
+          (widget.gamePoint / int.parse(gameQuestionList.length.toString())) *
+              correctAnswerCount
     };
 
     Resource resource =

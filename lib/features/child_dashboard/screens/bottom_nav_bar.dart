@@ -21,7 +21,7 @@ class BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _pages = [
     ChildDashboardScreen(),
     GameCategoryScreen(),
-    Center(child: Text('Achievement Page')),
+    AchievementScreen(),
     MyProfileScreens(),
   ];
 

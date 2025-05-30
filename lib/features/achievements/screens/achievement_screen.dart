@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
@@ -10,9 +9,8 @@ import 'package:spelling_bee/core/utils/helper/app_dimensions.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 import 'package:spelling_bee/features/achievements/widgets/achievement_screen_header.dart';
 
-
 class AchievementScreen extends StatefulWidget {
-   const AchievementScreen({super.key});
+  const AchievementScreen({super.key});
 
   @override
   State<AchievementScreen> createState() => _AchievementScreenState();
@@ -23,9 +21,25 @@ class _AchievementScreenState extends State<AchievementScreen> {
 
   final int totalLevels = 24;
 
-  final List<double> weeklyTime = [4, 5, 3.5, 6, 5, 10, 9,];
- // In minutes
-  final List<String> weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  final List<double> weeklyTime = [
+    4,
+    5,
+    3.5,
+    6,
+    5,
+    10,
+    9,
+  ];
+  // In minutes
+  final List<String> weekDays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun'
+  ];
   List<double> weekValue = List.filled(7, 0);
 
   @override
@@ -40,11 +54,9 @@ class _AchievementScreenState extends State<AchievementScreen> {
       await Future.delayed(const Duration(milliseconds: 200));
       setState(() {
         weekValue[i] = weeklyTime[i];
-
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +86,9 @@ class _AchievementScreenState extends State<AchievementScreen> {
             child: ListView(
               padding: EdgeInsets.all(16),
               children: [
-                SizedBox(height: AppDimensions.screenHeight*0.02),
+                SizedBox(height: AppDimensions.screenHeight * 0.02),
                 AchievementScreenHeader(),
-                SizedBox(height: AppDimensions.screenHeight*0.02),
+                SizedBox(height: AppDimensions.screenHeight * 0.02),
 
                 _buildStatCard(
                   emoji: "🎯",
@@ -84,7 +96,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                   value: "$totalLevels / 130",
                   color: Colors.lightGreenAccent,
                 ),
-                SizedBox(height: AppDimensions.screenHeight*0.02),
+                SizedBox(height: AppDimensions.screenHeight * 0.02),
 
                 // Coins
                 _buildStatCard(
@@ -93,15 +105,12 @@ class _AchievementScreenState extends State<AchievementScreen> {
                   value: "$totalCoins",
                   color: Colors.amberAccent,
                 ),
-                SizedBox(height: AppDimensions.screenHeight*0.02),
-
-
+                SizedBox(height: AppDimensions.screenHeight * 0.02),
 
                 // Bar Chart
                 Container(
                   width: ScreenUtils().screenWidth(context),
                   decoration: BoxDecoration(
-
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: AppColors.gray7, width: 4),
                     boxShadow: [
@@ -114,29 +123,28 @@ class _AchievementScreenState extends State<AchievementScreen> {
                     ],
                   ),
                   child: Padding(
-                    padding:  EdgeInsets.all(ScreenUtils().screenWidth(context)*0.04),
+                    padding: EdgeInsets.all(
+                        ScreenUtils().screenWidth(context) * 0.04),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            "🕒 Weekly Play Time",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                fontFamily:"comic_neue" ,
-                                color: AppColors.colorBlack
-                            )
-
-                        ).animate().slideY(duration: 400.ms).fadeIn(),
-                        SizedBox(height: AppDimensions.screenHeight*0.02),
-
-
+                        Text("🕒 Weekly Play Time",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    fontFamily: "comic_neue",
+                                    color: AppColors.colorBlack))
+                            .animate()
+                            .slideY(duration: 400.ms)
+                            .fadeIn(),
+                        SizedBox(height: AppDimensions.screenHeight * 0.02),
                         AspectRatio(
                           aspectRatio: 1.2,
                           child: BarChart(
                             BarChartData(
                               maxY: 12,
-                              barGroups: List.generate(weekDays.length, (index) {
+                              barGroups:
+                                  List.generate(weekDays.length, (index) {
                                 return BarChartGroupData(
                                   x: index,
                                   barRods: [
@@ -147,12 +155,14 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                           topRight: Radius.circular(6),
                                           topLeft: Radius.circular(6)),
                                       gradient: LinearGradient(
-                                        colors: [AppColors.alphabetSafeArea, AppColors.colorSkyBlue500],
+                                        colors: [
+                                          AppColors.alphabetSafeArea,
+                                          AppColors.colorSkyBlue500
+                                        ],
                                         begin: Alignment.bottomCenter,
                                         end: Alignment.topCenter,
                                       ),
                                     ),
-
                                   ],
                                   barsSpace: 0,
                                 );
@@ -164,23 +174,26 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                     // reservedSize: 32,
                                     getTitlesWidget: (value, _) {
                                       return Padding(
-                                        padding: const EdgeInsets.only(top: 6.0),
+                                        padding:
+                                            const EdgeInsets.only(top: 6.0),
                                         child: Text(
                                           weekDays[value.toInt()],
                                           style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                             fontFamily:"comic_neue" ,
-                                              color: AppColors.colorBlack
-                                          ),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: "comic_neue",
+                                              color: AppColors.colorBlack),
                                         ),
                                       );
                                     },
                                   ),
                                 ),
-                                topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
                               ),
                               gridData: FlGridData(
                                 show: false,
@@ -199,7 +212,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                               barTouchData: BarTouchData(
                                 enabled: true,
                                 touchTooltipData: BarTouchTooltipData(
-                                  getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                                  getTooltipItem:
+                                      (group, groupIndex, rod, rodIndex) {
                                     return BarTooltipItem(
                                       rod.toY.toStringAsFixed(1),
                                       const TextStyle(
@@ -217,7 +231,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                     ),
                   ),
                 ),
-                    //.animate().fadeIn().slideY(begin: 0.3, duration: 600.ms),
+                //.animate().fadeIn().slideY(begin: 0.3, duration: 600.ms),
 
                 SizedBox(height: 24),
               ],
@@ -249,26 +263,18 @@ class _AchievementScreenState extends State<AchievementScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  label,
+                Text(label,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        fontFamily:"comic_neue" ,
-                        color: AppColors.colorBlack
-                    )
-
-                ),
-                Text(
-                  value,
+                        fontFamily: "comic_neue",
+                        color: AppColors.colorBlack)),
+                Text(value,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        fontFamily:"comic_neue" ,
-                        color: AppColors.colorBlack
-                    )
-
-                ),
+                        fontFamily: "comic_neue",
+                        color: AppColors.colorBlack)),
               ],
             ),
           ),

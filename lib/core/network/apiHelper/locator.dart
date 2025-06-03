@@ -1,5 +1,7 @@
 
 import 'package:get_it/get_it.dart';
+import 'package:spelling_bee/features/achievements/data/achievement.usecase.dart';
+import 'package:spelling_bee/features/achievements/data/achievement_usecase_impl.dart';
 
 import '../../../features/auth/data/auth_usecase.dart';
 import '../../../features/auth/data/auth_usecase_impl.dart';
@@ -24,6 +26,7 @@ void initializeDependency(){
   getIt.registerFactory<AuthUsecase>(()=> AuthUsecaseImplementation());
   getIt.registerFactory<ExplorePlayUsecase>(()=> ExplorePlayUsecaseImplementation());
   getIt.registerFactory<GameCategoryUsecase>(()=> GameCategoryUsecaseImplementation());
+  getIt.registerFactory<AchievementUsecase>(()=> AchievementUsecaseImplementation());
 
 
 

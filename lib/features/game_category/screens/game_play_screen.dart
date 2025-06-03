@@ -568,8 +568,9 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
       "time_taken": secondCount,
       "corrected_answer": correctAnswerCount.toString(),
       "collected_points":
-          (widget.gamePoint / int.parse(gameQuestionList.length.toString())) *
-              correctAnswerCount
+      ((widget.gamePoint / gameQuestionList.length) * correctAnswerCount).round()
+
+
     };
 
     Resource resource =

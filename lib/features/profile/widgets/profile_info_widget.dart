@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spelling_bee/core/network/apiHelper/locator.dart';
+import 'package:spelling_bee/core/services/localStorage/shared_pref.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 
 import '../../../core/utils/commonWidgets/common_button.dart';
@@ -6,13 +8,30 @@ import '../../../core/utils/constants/app_colors.dart';
 
 class ProfileInfoWidget extends StatefulWidget {
   Function()? onButtonClicked;
-   ProfileInfoWidget({super.key, this.onButtonClicked});
+   ProfileInfoWidget({super.key, this.onButtonClicked,});
 
   @override
   State<ProfileInfoWidget> createState() => _ProfileInfoWidgetState();
 }
 
 class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
+  final SharedPref _pref = getIt<SharedPref>();
+  String language = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userData();
+
+  }
+
+  void userData() async {
+    String? currentLanguage = await _pref.getCurrentLanguageName();
+    setState(() {
+      language = currentLanguage ?? "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -76,15 +95,15 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
             ),
             RichText(
               text: TextSpan(
-                text: 'Grade :  ',
+                text: 'Language :  ',
                 style: TextStyle(
                     fontFamily: "comic_neue",
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: AppColors.colorBlack),
-                children: const <TextSpan>[
+                children:  <TextSpan>[
                   TextSpan(
-                      text: 'Grade 1',
+                      text: language,
                       style: TextStyle(
                           fontFamily: "comic_neue",
                           fontSize: 15,

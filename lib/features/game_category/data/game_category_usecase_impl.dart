@@ -14,13 +14,13 @@ class GameCategoryUsecaseImplementation extends GameCategoryUsecase {
 
   @override
   Future<Resource> gameCategoryList(
-      {required Map<String, dynamic> requestData, required String id}) async {
+      {required Map<String, dynamic> requestData, required String id, required String userId}) async {
     String token = await _pref.getUserAuthToken();
     Map<String, String> header = {
       "Authorization": "Bearer $token"
     };
     Resource resource = await _apiClient.getRequest(
-        url: "${ApiEndPoint.gameCategory}$id", header: header, requestData: requestData);
+        url: "${ApiEndPoint.gameCategory}$id/user/$userId", header: header, requestData: requestData);
     if (resource.status == STATUS.SUCCESS) {
       return resource;
     } else {

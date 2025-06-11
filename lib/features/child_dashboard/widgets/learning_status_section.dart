@@ -4,7 +4,10 @@ import '../../../core/utils/constants/app_colors.dart';
 import '../../../core/utils/helper/screen_utils.dart';
 
 class LearningStatusSection extends StatefulWidget {
-  const LearningStatusSection({super.key});
+  final int totalLevel;
+  final int totalUnlockedLevel;
+  final double totalTime;
+  const LearningStatusSection({super.key, required this.totalLevel, required this.totalUnlockedLevel, required this.totalTime});
 
   @override
   State<LearningStatusSection> createState() => _LearningStatusSectionState();
@@ -46,17 +49,42 @@ class _LearningStatusSectionState extends State<LearningStatusSection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Learning Status",
+                        "Gaming Status",
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 17,
                             fontFamily: "comic_neue",
                             color: AppColors.colorBlack),
                       ),
+                      // SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                      //
+                      // Text(
+                      //   "Letters   12/50",
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.w700,
+                      //       fontSize: 11,
+                      //       fontFamily: "comic_neue",
+                      //       color: AppColors.progressBarTextColor),
+                      // ),
+                      // SizedBox(
+                      //   width: ScreenUtils().screenWidth(
+                      //       context)*0.3, // Fixed width for the progress bar
+                      //   child: LinearProgressIndicator(
+                      //     borderRadius: BorderRadius.circular(10),
+                      //     value: progress,
+                      //     minHeight:
+                      //     10, // Height of the progress bar
+                      //     valueColor:
+                      //     AlwaysStoppedAnimation<Color>(
+                      //         AppColors.progressBarColor), // Fill color
+                      //     backgroundColor: Colors
+                      //         .grey[300], // Background color
+                      //   ),
+                      // ),
                       SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
 
                       Text(
-                        "Letters   12/50",
+                        "Levels   ${widget.totalUnlockedLevel}/${widget.totalLevel}",
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 11,
@@ -79,34 +107,8 @@ class _LearningStatusSectionState extends State<LearningStatusSection> {
                         ),
                       ),
                       SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-
                       Text(
-                        "Games   3/10",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 11,
-                            fontFamily: "comic_neue",
-                            color: AppColors.progressBarTextColor),
-                      ),
-                      SizedBox(
-                        width: ScreenUtils().screenWidth(
-                            context)*0.3, // Fixed width for the progress bar
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.circular(10),
-                          value: progress,
-                          minHeight:
-                          10, // Height of the progress bar
-                          valueColor:
-                          AlwaysStoppedAnimation<Color>(
-                              AppColors.progressBarColor), // Fill color
-                          backgroundColor: Colors
-                              .grey[300], // Background color
-                        ),
-                      ),
-                      SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-
-                      Text(
-                        "Total Time Spent: 45 min",
+                        "Total Time Spent\nthis week: ${widget.totalTime} min",
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 11,

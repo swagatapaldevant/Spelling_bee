@@ -22,19 +22,18 @@ class GameCategoryScreen extends StatefulWidget {
 }
 
 class _GameCategoryScreenState extends State<GameCategoryScreen> {
-
   final GameCategoryUsecase _gameCategoryUsecase = getIt<GameCategoryUsecase>();
   final SharedPref _pref = getIt<SharedPref>();
   bool isLoading = false;
   List<GameCategoryModel> gameCategoryList = [];
   List<GameListModel> gameListByCategory = [];
+  //List<Game> gameList = [];
 
   @override
   void initState() {
     super.initState();
     listOfGameCategory();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,70 +64,100 @@ class _GameCategoryScreenState extends State<GameCategoryScreen> {
                   ],
                 ),
               ),
-              child: isLoading?Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.containerColor,
-                ),
-              ):CustomScrollView(
-                slivers: [
-                  // Header section
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppDimensions.screenPadding,
-                        vertical: 16,
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.containerColor,
                       ),
-                      child: const GameCategoryHeader(),
-                    ),
-                  ),
+                    )
+                  : CustomScrollView(
+                      slivers: [
+                        // Header section
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppDimensions.screenPadding,
+                              vertical: 16,
+                            ),
+                            child: const GameCategoryHeader(),
+                          ),
+                        ),
 
-                  // Grid view section
-                  SliverPadding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppDimensions.screenPadding,
-                    ),
-                    sliver: SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                        childAspectRatio: 0.9,
-                        //mainAxisExtent: 180, // Fixed height for each item
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return AnimatedGameItem(
-                            index: index,
-                            onTap: () {
+                        // Grid view section
+                        SliverPadding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppDimensions.screenPadding,
+                          ),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
+                              childAspectRatio: 0.9,
+                              //mainAxisExtent: 180, // Fixed height for each item
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                int totalLevel = 0;
+                                int totalPlayedLevel = 0;
 
-                              gameCategoryList[index].gameCount!>0?
-                              listOfGameByCategory(gameCategoryList[index].sId.toString()):
-                              showTopSnackBar(
-                                Overlay.of(context),
-                                CustomSnackBar.error(
-                                  message:
-                                  "No game available in this category",
-                                ),
-                              );
+                                final category = gameCategoryList[index];
+                                if(category.games!.isEmpty)
+                                {
+                                  totalLevel = 0;
+                                  totalPlayedLevel = 0;
+                                }else {
+                                  // Safely loop through the games of the current category
+                                  for (int j = 0; j <
+                                      category.games!.length; j++) {
+                                    final game = category.games?[j];
 
-                            },
-                            gameName: gameCategoryList[index].gameCategoryName.toString(),
-                          );
-                        },
-                        childCount: gameCategoryList.length,
-                      ),
-                    ),
-                  ),
+                                    totalLevel += game?.totalLevels ?? 0;
+                                    totalPlayedLevel +=
+                                        game?.completedLevels ?? 0;
+                                  }
+                                }
+                                //
+                                // print(totalLevel);
+                                // print(totalPlayedLevel);
 
-                  // Add some bottom padding
-                  SliverPadding(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).padding.bottom + 16,
+                                return AnimatedGameItem(
+                                  totalLevel: totalLevel,
+                                  totalPlayedLevel: totalPlayedLevel,
+                                  index: index,
+                                  onTap: () {
+                                    gameCategoryList[index].games!.isEmpty
+                                        ? showTopSnackBar(
+                                      Overlay.of(context),
+                                      CustomSnackBar.error(
+                                        message:
+                                        "No game available in this category",
+                                      ),
+                                    )
+                                        : listOfGameByCategory(
+                                        gameCategoryList[index]
+                                            .sId
+                                            .toString());
+                                  },
+                                  gameName: gameCategoryList[index]
+                                      .categoryName![index].gameCategoryName
+                                      .toString(),
+                                );
+                              },
+                              childCount: gameCategoryList.length,
+                            ),
+                          ),
+                        ),
+
+                        // Add some bottom padding
+                        SliverPadding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).padding.bottom + 16,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ),
           ),
         ],
@@ -136,25 +165,29 @@ class _GameCategoryScreenState extends State<GameCategoryScreen> {
     );
   }
 
-
   listOfGameCategory() async {
     setState(() {
       isLoading = true;
     });
 
     String? languageTypeId = await _pref.getLanguageId();
+    String? userId = await _pref.getChildId();
+    Map<String, dynamic> requestData = {};
 
-    Map<String, dynamic> requestData = {
-
-    };
-
-    Resource resource =
-    await _gameCategoryUsecase.gameCategoryList(requestData: requestData, id:languageTypeId.toString() );
+    Resource resource = await _gameCategoryUsecase.gameCategoryList(
+        requestData: requestData,
+        id: languageTypeId.toString(),
+        userId: userId.toString());
 
     if (resource.status == STATUS.SUCCESS) {
       gameCategoryList = (resource.data as List)
           .map((x) => GameCategoryModel.fromJson(x))
           .toList();
+      // gameList = (resource.data["games"] as List)
+      //     .map((x) => Game.fromJson(x))
+      //     .toList();
+
+
       // languageListId.clear();
       // for (var item in languageList) {
       //   String languageName =
@@ -177,27 +210,28 @@ class _GameCategoryScreenState extends State<GameCategoryScreen> {
           context: context, mes: resource.message ?? "", messageType: 4);
     }
   }
-
 
   listOfGameByCategory(String categoryId) async {
     setState(() {
       isLoading = true;
     });
 
-    Map<String, dynamic> requestData = {
+    Map<String, dynamic> requestData = {};
 
-    };
-
-    Resource resource =
-    await _gameCategoryUsecase.gameListByCategory(requestData: requestData, id: categoryId);
+    Resource resource = await _gameCategoryUsecase.gameListByCategory(
+      requestData: requestData,
+      id: categoryId,
+    );
 
     if (resource.status == STATUS.SUCCESS) {
       gameListByCategory = (resource.data as List)
           .map((x) => GameListModel.fromJson(x))
           .toList();
-      Navigator.pushNamed(context, "/GamePlayNavbarScreen",
+      Navigator.pushNamed(
+        context,
+        "/GamePlayNavbarScreen",
         arguments: gameListByCategory,
-        );
+      );
       // languageListId.clear();
       // for (var item in languageList) {
       //   String languageName =
@@ -211,7 +245,6 @@ class _GameCategoryScreenState extends State<GameCategoryScreen> {
 
       setState(() {
         isLoading = false;
-
       });
     } else {
       setState(() {
@@ -221,7 +254,4 @@ class _GameCategoryScreenState extends State<GameCategoryScreen> {
           context: context, mes: resource.message ?? "", messageType: 4);
     }
   }
-
-
-
 }

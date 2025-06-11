@@ -3,13 +3,26 @@ import 'package:spelling_bee/core/utils/constants/app_colors.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
 
 class AchievementSection extends StatefulWidget {
-  const AchievementSection({super.key});
+  final int dailyCount;
+  final int monthlyCount;
+  final int weeklyCount;
+  const AchievementSection({super.key, required this.dailyCount, required this.monthlyCount, required this.weeklyCount});
 
   @override
   State<AchievementSection> createState() => _AchievementSectionState();
 }
 
 class _AchievementSectionState extends State<AchievementSection> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.dailyCount);
+    print(widget.monthlyCount);
+    print(widget.weeklyCount);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -18,15 +31,15 @@ class _AchievementSectionState extends State<AchievementSection> {
         Positioned(
             top: 10,
             left: 20,
-            child: AchievementStrikeCard(value:100, name: 'Daily',)),
+            child: AchievementStrikeCard(value:widget.dailyCount, name: 'Daily',)),
         Positioned(
           top: 10,
             left: 145,
-            child: AchievementStrikeCard(value:500, name: 'Weekly',)),
+            child: AchievementStrikeCard(value:widget.weeklyCount, name: 'Weekly',)),
         Positioned(
             bottom: 10,
-            left: 90,
-            child: AchievementStrikeCard(value:5000, name: 'Monthly',)),
+            left: 80,
+            child: AchievementStrikeCard(value:widget.monthlyCount, name: 'Monthly',)),
         Positioned(
           right: 0,
           child: Image.asset("assets/images/achievement_cn.png",
@@ -35,33 +48,33 @@ class _AchievementSectionState extends State<AchievementSection> {
           ),
         ),
 
-        Positioned(
-          bottom: 15,
-          left: 10,
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.colorBlack.withOpacity(0.25), // Shadow color
-                  blurRadius: 4, // Blur radius
-                  offset: Offset(0, 4), // Horizontal and vertical offset
-                  spreadRadius: 0, // How much the shadow will spread
-                ),
-              ],
-            ),
-            child: Padding(
-              padding:  EdgeInsets.all(8.0),
-              child: Text("Tap Here !", textAlign: TextAlign.center, style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  fontFamily:"comic_neue" ,
-                  color: AppColors.colorBlack
-              ),),
-            ),
-          ),
-        )
+        // Positioned(
+        //   bottom: 15,
+        //   left: 10,
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       color: AppColors.white,
+        //       borderRadius: BorderRadius.circular(20),
+        //       boxShadow: [
+        //         BoxShadow(
+        //           color: AppColors.colorBlack.withOpacity(0.25), // Shadow color
+        //           blurRadius: 4, // Blur radius
+        //           offset: Offset(0, 4), // Horizontal and vertical offset
+        //           spreadRadius: 0, // How much the shadow will spread
+        //         ),
+        //       ],
+        //     ),
+        //     child: Padding(
+        //       padding:  EdgeInsets.all(8.0),
+        //       child: Text("Tap Here !", textAlign: TextAlign.center, style: TextStyle(
+        //           fontWeight: FontWeight.bold,
+        //           fontSize: 12,
+        //           fontFamily:"comic_neue" ,
+        //           color: AppColors.colorBlack
+        //       ),),
+        //     ),
+        //   ),
+        // )
 
       ],
     );

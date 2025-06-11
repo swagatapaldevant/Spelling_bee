@@ -7,11 +7,15 @@ class AnimatedGameItem extends StatefulWidget {
   final int index;
   final VoidCallback? onTap;
   final String gameName;
+  final int totalLevel;
+  final int totalPlayedLevel;
 
   const AnimatedGameItem({
     super.key,
     required this.index,
     this.onTap, required this.gameName,
+    required this.totalLevel,
+    required this.totalPlayedLevel
   });
 
   @override
@@ -178,7 +182,8 @@ class _AnimatedGameItemState extends State<AnimatedGameItem>
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: LinearProgressIndicator(
-                        value: (widget.index % 5) / 4, // Example progress
+                        value: (widget.totalPlayedLevel == 0 && widget.totalLevel == 0)?0:widget.totalPlayedLevel/widget.totalLevel, // Example progress
+                       // value: 0/0, // Example progress
                         backgroundColor: Colors.white.withOpacity(0.3),
                         valueColor:
                             AlwaysStoppedAnimation<Color>(AppColors.white),
@@ -219,26 +224,26 @@ class _AnimatedGameItemState extends State<AnimatedGameItem>
                 ),
 
                 // Difficulty badge
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: _getDifficultyColor(widget.index),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      _getDifficultyLevel(widget.index),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: 8,
+                //   left: 8,
+                //   child: Container(
+                //     padding:
+                //         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                //     decoration: BoxDecoration(
+                //       color: _getDifficultyColor(widget.index),
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     child: Text(
+                //       _getDifficultyLevel(widget.index),
+                //       style: const TextStyle(
+                //         color: Colors.white,
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 10,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -57,7 +57,7 @@ class _PracticeGameSectionState extends State<PracticeGameSection> {
                       },
                       imageLink: 'assets/images/level_1.png',
                       level:
-                          gameCategoryList[index].gameCategoryName.toString(),
+                          gameCategoryList[index].categoryName![index].gameCategoryName.toString(),
                     ),
                   );
                 }),
@@ -70,11 +70,14 @@ class _PracticeGameSectionState extends State<PracticeGameSection> {
     });
 
     String? languageTypeId = await _pref.getLanguageId();
+    String? userId = await _pref.getChildId();
 
     Map<String, dynamic> requestData = {};
 
     Resource resource = await _gameCategoryUsecase.gameCategoryList(
-        requestData: requestData, id: languageTypeId.toString());
+        requestData: requestData,
+        id: languageTypeId.toString(),
+        userId: userId.toString());
 
     if (resource.status == STATUS.SUCCESS) {
       List<GameCategoryModel> allGames = (resource.data as List)
@@ -110,7 +113,7 @@ class _PracticeGameSectionState extends State<PracticeGameSection> {
           .map((x) => GameListModel.fromJson(x))
           .toList();
       Navigator.pushNamed(
-        context,  "/GamePlayNavbarScreen",
+        context, "/GamePlayNavbarScreen",
         arguments: gameListByCategory, // Excludes section headers
       );
       // languageListId.clear();

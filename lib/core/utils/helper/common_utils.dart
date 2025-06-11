@@ -301,5 +301,18 @@ class CommonUtils {
 
 
 
+  String formatCoins(int coins) {
+    if (coins >= 1000000) {
+      return (coins / 1000000).toStringAsFixed(1).replaceAll('.0', '') + 'M';
+    } else if (coins >= 1000) {
+      return (coins / 1000).toStringAsFixed(1).replaceAll('.0', '') + 'k';
+    } else {
+      return coins.toString();
+    }
+  }
+
+
+
+
 
 }

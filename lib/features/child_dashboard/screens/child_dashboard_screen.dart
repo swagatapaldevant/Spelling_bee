@@ -156,17 +156,7 @@ class _ChildDashboardScreenState extends State<ChildDashboardScreen> {
                     SizedBox(
                       height: ScreenUtils().screenHeight(context) * 0.02,
                     ),
-                    ChildDashboardHeader(
-                      headerName: 'Achievements',
-                    ),
-                    SizedBox(
-                      height: ScreenUtils().screenHeight(context) * 0.02,
-                    ),
-                    AchievementSection(),
-                    SizedBox(
-                      height: ScreenUtils().screenHeight(context) * 0.02,
-                    ),
-                    LearningStatusSection()
+
                   ],
                 ),
               ),

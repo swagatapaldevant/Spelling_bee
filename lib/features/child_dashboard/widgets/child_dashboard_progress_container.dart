@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:spelling_bee/core/network/apiHelper/locator.dart';
+import 'package:spelling_bee/core/network/apiHelper/resource.dart';
+import 'package:spelling_bee/core/network/apiHelper/status.dart';
+import 'package:spelling_bee/core/services/localStorage/shared_pref.dart';
 import 'package:spelling_bee/core/utils/constants/app_colors.dart';
+import 'package:spelling_bee/core/utils/helper/common_utils.dart';
 import 'package:spelling_bee/core/utils/helper/screen_utils.dart';
+import 'package:spelling_bee/features/achievements/data/achievement.usecase.dart';
 
 import 'dashboard_circular_progress_widget.dart';
 
@@ -12,6 +18,18 @@ class ChildDashboardProgressContainer extends StatefulWidget {
 }
 
 class _ChildDashboardProgressContainerState extends State<ChildDashboardProgressContainer> {
+  String totalCoins = "";
+  String totalLevels = "";
+  bool isLoading = false;
+  final AchievementUsecase _achievementUsecase = getIt<AchievementUsecase>();
+  final SharedPref _pref = getIt<SharedPref>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    achievementData();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,18 +87,17 @@ class _ChildDashboardProgressContainerState extends State<ChildDashboardProgress
                         Row(
                           children: [
 
-
+                            Text(totalCoins, style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontFamily: "comic_neue",
+                                color: AppColors.colorBlack
+                            ),),
                             Image.asset("assets/images/star.png",
                               height: ScreenUtils().screenHeight(context)*0.03,
                               width: ScreenUtils().screenHeight(context)*0.04,
                               fit: BoxFit.contain,
                             ),
-                            Text("(10k)", style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 11,
-                                fontFamily: "comic_neue",
-                                color: AppColors.colorBlack
-                            ),),
                           ],
                         ),
 
@@ -113,7 +130,7 @@ class _ChildDashboardProgressContainerState extends State<ChildDashboardProgress
 
                         SizedBox(width: ScreenUtils().screenWidth(context)*0.05,),
 
-                        Text("12/50 ", style: TextStyle(
+                        Text("12/ $totalLevels ", style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 11,
                             fontFamily: "comic_neue",
@@ -141,4 +158,35 @@ class _ChildDashboardProgressContainerState extends State<ChildDashboardProgress
 
     );
   }
+
+  Future<void> achievementData() async {
+    setState(() => isLoading = true);
+
+    String? userId = await _pref.getChildId();
+    Map<String, dynamic> requestData = {};
+    Resource resource = await _achievementUsecase.achievementData(
+      requestData: requestData,
+      id: userId.toString(),
+    );
+
+    if (resource.status == STATUS.SUCCESS) {
+
+      totalCoins = resource.data["totalCoinsEarnedAllTime"].toString();
+      totalLevels = resource.data["totalLevelsInGame"].toString();
+
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      CommonUtils().flutterSnackBar(
+        context: context,
+        mes: resource.message ?? "",
+        messageType: 4,
+      );
+    }
+
+    setState(() => isLoading = false);
+  }
+
+
 }

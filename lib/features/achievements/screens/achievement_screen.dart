@@ -504,7 +504,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
       topThreeUserList = (resource.data['top3Users'] as List)
           .map((x) => TopThreeUserModel.fromJson(x))
           .toList();
-      currentUserRank = int.parse(resource.data["userRank"].toString());
+      resource.data["userRank"]!= null?
+      currentUserRank = int.parse(resource.data["userRank"].toString()):currentUserRank;
       findTopThreeUsers(topThreeUserList);
 
       animateBars();

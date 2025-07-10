@@ -24,6 +24,9 @@ class ApiEndPoint {
   static const countryList = "$baseurl/user/getCountry";
   static const cityList = "$baseurl/user/getCity";
 
+  static const profileData = "$baseurl/user/getLoginUser";
+  static const updateProfile = "$baseurl/user/edit_user";
+
 
 
   static const learningLetterType = "$baseurl/learning-master/by-language/";

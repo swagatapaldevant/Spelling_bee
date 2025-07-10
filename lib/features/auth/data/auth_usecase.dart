@@ -12,5 +12,9 @@ abstract class AuthUsecase{
   Future<Resource> stateList({required Map<String, dynamic> requestData, required String id});
 
 
+  Future<Resource> profileData({required Map<String, dynamic> requestData});
+  Future<Resource> updateProfile({required Map<String, dynamic> requestData, required String id});
+
+
 
 }

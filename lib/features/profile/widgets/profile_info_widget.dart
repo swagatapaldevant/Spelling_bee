@@ -8,7 +8,9 @@ import '../../../core/utils/constants/app_colors.dart';
 
 class ProfileInfoWidget extends StatefulWidget {
   Function()? onButtonClicked;
-   ProfileInfoWidget({super.key, this.onButtonClicked,});
+  final String name;
+  final String city;
+   ProfileInfoWidget({super.key, this.onButtonClicked, required this.name, required this.city,});
 
   @override
   State<ProfileInfoWidget> createState() => _ProfileInfoWidgetState();
@@ -66,7 +68,7 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "OLIVER JACKSON",
+             widget.name,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: "comic_neue",
@@ -76,15 +78,15 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
             ),
             RichText(
               text: TextSpan(
-                text: 'Age :  ',
+                text: 'City :  ',
                 style: TextStyle(
                     fontFamily: "comic_neue",
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: AppColors.colorBlack),
-                children: const <TextSpan>[
+                children:  <TextSpan>[
                   TextSpan(
-                      text: '6',
+                      text: widget.city,
                       style: TextStyle(
                           fontFamily: "comic_neue",
                           fontSize: 15,

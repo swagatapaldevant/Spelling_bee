@@ -108,4 +108,38 @@ class AuthUsecaseImplementation extends AuthUsecase {
     }
   }
 
+  @override
+  Future<Resource> profileData(
+      {required Map<String, dynamic> requestData}) async {
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization": "Bearer $token"
+    };
+    Resource resource = await _apiClient.getRequest(
+        url: ApiEndPoint.profileData, header: header, requestData: requestData);
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+    } else {
+      return resource;
+    }
+  }
+
+  @override
+  Future<Resource> updateProfile(
+      {required Map<String, dynamic> requestData, required String id}) async {
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization": "Bearer $token"
+    };
+    Resource resource = await _apiClient.postRequest(
+        url: "${ApiEndPoint.updateProfile}/$id", header: header, requestData: requestData);
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+    } else {
+      return resource;
+    }
+  }
+
+
+
 }

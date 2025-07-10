@@ -10,6 +10,7 @@ import 'package:spelling_bee/features/exploreAndPlay/screens/vowel_game/vowel_de
 import 'package:spelling_bee/features/game_category/models/game_list_model.dart';
 import 'package:spelling_bee/features/game_category/screens/drag_drop_alphabet_puzzle_game.dart';
 import 'package:spelling_bee/features/game_category/screens/game_navbar_screen.dart';
+import 'package:spelling_bee/features/profile/model/profile_data_model.dart';
 import 'package:spelling_bee/features/splash/overview_screen.dart';
 import 'package:spelling_bee/features/splash/wellcome_screen.dart';
 
@@ -92,7 +93,7 @@ class RouteGenerator{
       case kLearningGameButtonNavbar:
         return _animatedPageRoute(LearningGameButtonNavbar(index: args as int,));
       case kEditProfileScreen:
-        return _animatedPageRoute(EditProfileScreen());
+        return _animatedPageRoute(EditProfileScreen(profileData: args as ProfileDataModel,));
       case kGamePlayNavbarScreen:
         final gameList = settings.arguments as List<GameListModel>;
         return _animatedPageRoute(GamePlayNavbarScreen(gameList: gameList));

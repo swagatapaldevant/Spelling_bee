@@ -7,6 +7,9 @@ abstract class AuthUsecase{
   Future<Resource> logIn({required Map<String, dynamic> requestData});
   Future<Resource> register({required Map<String, dynamic> requestData});
   Future<Resource> updateConcern({required Map<String, dynamic> requestData});
+  Future<Resource> motherLanguageList({required Map<String, dynamic> requestData});
+  Future<Resource> countryList({required Map<String, dynamic> requestData});
+  Future<Resource> stateList({required Map<String, dynamic> requestData, required String id});
 
 
 

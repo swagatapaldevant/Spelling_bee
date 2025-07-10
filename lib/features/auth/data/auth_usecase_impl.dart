@@ -67,4 +67,45 @@ class AuthUsecaseImplementation extends AuthUsecase {
       return resource;
     }
   }
+
+  @override
+  Future<Resource> motherLanguageList(
+      {required Map<String, dynamic> requestData}) async {
+    Map<String, String> header = {};
+    Resource resource = await _apiClient.getRequest(
+        url: ApiEndPoint.motherLanguageList, header: header, requestData: requestData);
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+    } else {
+      return resource;
+    }
+  }
+
+
+  @override
+  Future<Resource> countryList(
+      {required Map<String, dynamic> requestData}) async {
+    Map<String, String> header = {};
+    Resource resource = await _apiClient.getRequest(
+        url: ApiEndPoint.countryList, header: header, requestData: requestData);
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+    } else {
+      return resource;
+    }
+  }
+
+  @override
+  Future<Resource> stateList(
+      {required Map<String, dynamic> requestData, required String id}) async {
+    Map<String, String> header = {};
+    Resource resource = await _apiClient.getRequest(
+        url: "${ApiEndPoint.cityList}/$id", header: header, requestData: requestData);
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+    } else {
+      return resource;
+    }
+  }
+
 }

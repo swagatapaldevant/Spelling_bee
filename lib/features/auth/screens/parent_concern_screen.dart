@@ -21,10 +21,9 @@ class ParentConcernScreen extends StatefulWidget {
 }
 
 class _ParentConcernScreenState extends State<ParentConcernScreen> {
-
   String? selectedValue;
   String? selectedValue1;
-  String languageSelection="";
+  String languageSelection = "";
   String? languageSelectionId;
   final AuthUsecase _authUsecase = getIt<AuthUsecase>();
   final SharedPref _pref = getIt<SharedPref>();
@@ -46,16 +45,16 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset("assets/images/parent_concern_top.png",
-          width: ScreenUtils().screenWidth(context),
+          Image.asset(
+            "assets/images/parent_concern_top.png",
+            width: ScreenUtils().screenWidth(context),
           ),
-      
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Padding(
-                    padding:  EdgeInsets.all(AppDimensions.screenPadding),
+                    padding: EdgeInsets.all(AppDimensions.screenPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -68,7 +67,6 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-
                         Text(
                           "In the conduct of learning online, we are using online conferencing platforms in conducting classes online. We believe that there is no better teaching and learning method than conducting lessons in physical presence and participation of face-to-face interaction. However, during these days, we prioritize everyone's safety.",
                           style: TextStyle(
@@ -78,9 +76,9 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         Text(
                           "We believe that education starts at home and during this experience of online learning, we hope to build a strong partnership with families for a child's ways to learn at home with the help of technologies that allows us to remain in touch, provide instruction, educate, and interact with your child.",
                           style: TextStyle(
@@ -90,8 +88,9 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         Text(
                           "Children's Online Privacy Protection Act (COPPA)",
                           style: TextStyle(
@@ -101,7 +100,6 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-
                         Text(
                           "COPPA is a law that deals with how websites and other online operations, including applications, collect data and information from children under the age of 13. In compliance, no advertising shall appear during sessions of online classes.",
                           style: TextStyle(
@@ -111,10 +109,9 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
-
-
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.03,
+                        ),
                         Text(
                           "I hereby give my permission for my child to participate in an online class in a platform preferred by the School",
                           style: TextStyle(
@@ -124,12 +121,17 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         _buildSelectedOption("Yes"),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         _buildSelectedOption("No"),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
-
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.03,
+                        ),
                         Text(
                           "By affirming my consent for my child to participate in an online class, I understand that no derogatory, obscene, or any form of racism shall be allowed in class.",
                           style: TextStyle(
@@ -139,12 +141,17 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
-
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         _buildSelectedOption1("Yes"),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         _buildSelectedOption1("No"),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         Text(
                           "Select your language which you want to learn",
                           style: TextStyle(
@@ -154,57 +161,62 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
                             fontFamily: "comic_neue",
                           ),
                         ),
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
                         CustomDropDownForTaskCreation(
                           data: languageListId,
                           placeHolderText: 'Select One Language',
                           onValueSelected: (String value, String id) {
                             setState(() {
-                              languageSelection = value; // Update selected value
+                              languageSelection =
+                                  value; // Update selected value
                               languageSelectionId = id;
-                              _pref.setLanguageId(languageSelectionId??"");
+                              _pref.setLanguageId(languageSelectionId ?? "");
                               _pref.setCurrentLanguageName(languageSelection);
                             });
                           },
                         ),
-
-                        SizedBox(height: ScreenUtils().screenHeight(context)*0.02,),
-
-
-
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.02,
+                        ),
                       ],
                     ),
                   ),
                   Stack(
                     children: [
-                      Image.asset("assets/images/parent_concern.png",
+                      Image.asset(
+                        "assets/images/parent_concern.png",
                         width: ScreenUtils().screenWidth(context),
                         fit: BoxFit.fill,
                       ),
                       Center(
-                        child:isLoading? CircularProgressIndicator(
-                          color: AppColors.containerColor,
-                        ):CommonButton(
-                          onTap: () {
-                            if(selectedValue == "Yes" && selectedValue1 == "Yes" )
-                              {
-                                updateParentConcern();
-                              }
-                            else{
-                              CommonUtils().flutterSnackBar(
-                                  context: context, mes:"You need to accept both concern", messageType: 4);
-                            }
-
-                                                   },
-                          fontSize: 16,
-                          height: ScreenUtils().screenHeight(context) * 0.05,
-                          width: ScreenUtils().screenWidth(context) * 0.6,
-                          buttonColor: AppColors.welcomeButtonColor,
-                          buttonName: 'Submit',
-                          buttonTextColor: AppColors.white,
-                          gradientColor1: Color(0xffc66d32),
-                          gradientColor2: Color(0xfffed402),
-                        ),
+                        child: isLoading
+                            ? CircularProgressIndicator(
+                                color: AppColors.containerColor,
+                              )
+                            : CommonButton(
+                                onTap: () {
+                                  if (selectedValue == "Yes" &&
+                                      selectedValue1 == "Yes") {
+                                    updateParentConcern();
+                                  } else {
+                                    CommonUtils().flutterSnackBar(
+                                        context: context,
+                                        mes: "You need to accept both concern",
+                                        messageType: 4);
+                                  }
+                                },
+                                fontSize: 16,
+                                height:
+                                    ScreenUtils().screenHeight(context) * 0.05,
+                                width: ScreenUtils().screenWidth(context) * 0.6,
+                                buttonColor: AppColors.welcomeButtonColor,
+                                buttonName: 'Submit',
+                                buttonTextColor: AppColors.white,
+                                gradientColor1: Color(0xffc66d32),
+                                gradientColor2: Color(0xfffed402),
+                              ),
                       ),
                     ],
                   ),
@@ -212,17 +224,13 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
               ),
             ),
           ),
-
-      
-      
-          
         ],
       ),
     );
   }
 
   Widget _buildSelectedOption(String v) {
-    final bool isSelected = selectedValue== v;
+    final bool isSelected = selectedValue == v;
 
     return GestureDetector(
       onTap: () {
@@ -252,13 +260,13 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
             ),
             child: isSelected
                 ? const Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 16,
-            )
+                    Icons.check,
+                    color: Colors.white,
+                    size: 16,
+                  )
                 : null,
           ),
-          SizedBox(width: ScreenUtils().screenWidth(context)*0.04),
+          SizedBox(width: ScreenUtils().screenWidth(context) * 0.04),
           Text(
             v,
             style: const TextStyle(
@@ -273,7 +281,7 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
   }
 
   Widget _buildSelectedOption1(String v) {
-    final bool isSelected = selectedValue1== v;
+    final bool isSelected = selectedValue1 == v;
 
     return GestureDetector(
       onTap: () {
@@ -303,13 +311,13 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
             ),
             child: isSelected
                 ? const Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 16,
-            )
+                    Icons.check,
+                    color: Colors.white,
+                    size: 16,
+                  )
                 : null,
           ),
-          SizedBox(width: ScreenUtils().screenWidth(context)*0.04),
+          SizedBox(width: ScreenUtils().screenWidth(context) * 0.04),
           Text(
             v,
             style: const TextStyle(
@@ -323,18 +331,15 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
     );
   }
 
-
   listOfLanguage() async {
     setState(() {
       //isLoading = true;
     });
 
-    Map<String, dynamic> requestData = {
-
-    };
+    Map<String, dynamic> requestData = {};
 
     Resource resource =
-    await _authUsecase.languageList(requestData: requestData);
+        await _authUsecase.languageList(requestData: requestData);
 
     if (resource.status == STATUS.SUCCESS) {
       languageList = (resource.data as List)
@@ -342,9 +347,7 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
           .toList();
       languageListId.clear();
       for (var item in languageList) {
-        String languageName =
-        "${item.languageName ?? ""} "
-            .trim();
+        String languageName = "${item.languageName ?? ""} ".trim();
         String? languageId = item.sId;
         if (languageId != null) {
           languageListId[languageName] = languageId;
@@ -363,7 +366,6 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
     }
   }
 
-
   updateParentConcern() async {
     setState(() {
       isLoading = true;
@@ -372,21 +374,19 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
 
     Map<String, dynamic> requestData = {
       "userId": userId,
-      "consent1": selectedValue == "Yes"?true:false,
-      "consent2": selectedValue1 == "Yes"?true:false,
+      "consent1": selectedValue == "Yes" ? true : false,
+      "consent2": selectedValue1 == "Yes" ? true : false,
       "language": languageSelectionId
     };
 
-    Resource resource = await _authUsecase.updateConcern(requestData: requestData);
+    Resource resource =
+        await _authUsecase.updateConcern(requestData: requestData);
 
     if (resource.status == STATUS.SUCCESS) {
-
       setState(() {
         isLoading = false;
         Navigator.pushReplacementNamed(context, "/BottomNavBar");
       });
-
-
     } else {
       setState(() {
         isLoading = false;
@@ -395,7 +395,4 @@ class _ParentConcernScreenState extends State<ParentConcernScreen> {
           context: context, mes: resource.message ?? "", messageType: 4);
     }
   }
-
-
-
 }

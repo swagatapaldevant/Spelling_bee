@@ -57,6 +57,7 @@ dependencies:
   audioplayers: ^6.4.0
   top_snackbar_flutter: ^3.2.0
   flutter_animate: ^4.5.2
+  dropdown_search: ^6.0.2
 
 dev_dependencies:
   flutter_test:

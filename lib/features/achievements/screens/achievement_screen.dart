@@ -355,7 +355,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                             (group, groupIndex, rod, rodIndex) {
                                           final isTreasureHunt = rodIndex == 0;
                                           final label = isTreasureHunt
-                                              ? "Treasure Hunt"
+                                              ? "Earning"
                                               : "Play Time";
                                           final type = isTreasureHunt
                                               ? "Coins"
@@ -383,8 +383,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                     children: [
                                       CircleAvatar(
                                         radius: 8,
-                                        backgroundColor:
-                                            AppColors.alphabetSafeArea,
+                                        backgroundColor:Color(0xFFFF6FD8)
+
                                       ),
                                       SizedBox(
                                         width: 8,
@@ -403,7 +403,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                     children: [
                                       CircleAvatar(
                                         radius: 8,
-                                        backgroundColor: Color(0xFFFF6FD8),
+                                        backgroundColor:  AppColors.alphabetSafeArea,
                                       ),
                                       SizedBox(
                                         width: 8,

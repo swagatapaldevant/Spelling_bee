@@ -8,12 +8,12 @@ class ApiEndPoint {
   ApiEndPoint._internal();
 
   //static const baseurl = "http://192.168.29.243:8001/api";
-  //static const baseurl = "https://thecityofjoy.in/spelling_bee_backend/api";
-  static const baseurl = "http://192.168.29.216:5000/api";
+  static const baseurl = "https://thecityofjoy.in/spelling_bee_backend/api";
+  //static const baseurl = "http://192.168.29.216:5000/api";
 
-  static const domain = "http://192.168.29.216:5000";
+  //static const domain = "http://192.168.29.216:5000";
 
-  //static const domain  = "https://thecityofjoy.in/spelling_bee_backend";
+  static const domain  = "https://thecityofjoy.in/spelling_bee_backend";
 
   //auth module
   static const languageList = "$baseurl/language/get-delete";

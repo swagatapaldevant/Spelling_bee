@@ -25,7 +25,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController actualNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -122,8 +123,16 @@ class _SignupScreenState extends State<SignupScreen> {
                           height: ScreenUtils().screenHeight(context) * 0.03,
                         ),
                         CustomTextField(
-                          controller: nameController,
-                          hintText: 'Enter your name',
+                          controller: userNameController,
+                          hintText: 'Enter your user name',
+                          prefixIcon: Icons.person,
+                        ),
+                        SizedBox(
+                          height: ScreenUtils().screenHeight(context) * 0.01,
+                        ),
+                        CustomTextField(
+                          controller: actualNameController,
+                          hintText: 'Enter your full name',
                           prefixIcon: Icons.person,
                         ),
                         SizedBox(
@@ -453,7 +462,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
     Map<String, dynamic> requestData = {
       "email": emailController.text.trim(),
-      "name": nameController.text.trim(),
+      "name": userNameController.text.trim(),
+      "originalName":actualNameController.text.trim(),
       "userType": "child",
       "password": passwordController.text.trim(),
       "yearOfBirth": selectedDate,
@@ -493,6 +503,7 @@ class _SignupScreenState extends State<SignupScreen> {
       setState(() {
         isLoading = false;
       });
+      print(" message is ${resource.message}");
       CommonUtils().flutterSnackBar(
           context: context, mes: resource.message ?? "", messageType: 4);
     }

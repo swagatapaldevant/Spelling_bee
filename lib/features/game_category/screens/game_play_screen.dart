@@ -292,9 +292,7 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
                       _stopwatch.reset();
                       _stopwatch.start();
                       gameSubmitApi(endDialogContext);
-                      Navigator.of(endDialogContext).pop();
-                      Navigator.of(context)
-                          .pushReplacementNamed('/GameLevelScreen');
+
                     },
                     height: ScreenUtils().screenHeight(context) * 0.06,
                     width: ScreenUtils().screenWidth(context) * 0.4,
@@ -576,9 +574,9 @@ class _ActualGamePlayScreenState extends State<ActualGamePlayScreen>
     Resource resource =
         await _gameCategoryUsecase.gameSubmit(requestData: requestData);
     if (resource.status == STATUS.SUCCESS) {
-      //Navigator.of(endDialogContext).pop();
-      // Navigator.of(context)
-      //     .pushReplacementNamed('/GameLevelScreen');
+      Navigator.of(endDialogContext).pop();
+      Navigator.of(context)
+          .pushReplacementNamed('/GameLevelScreen');
       // gameQuestionList = (resource.data as List)
       //     .map((x) => QuestionDetailsModel.fromJson(x))
       //     .toList();

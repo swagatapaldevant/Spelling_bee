@@ -67,15 +67,26 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-             widget.name,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: "comic_neue",
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.colorBlack),
+            RichText(
+              text: TextSpan(
+                text: 'User Name :  ',
+                style: TextStyle(
+                    fontFamily: "comic_neue",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.colorBlack),
+                children:  <TextSpan>[
+                  TextSpan(
+                      text: widget.name,
+                    style: TextStyle(
+                        fontFamily: "comic_neue",
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.colorBlack),),
+                ],
+              ),
             ),
+
             RichText(
               text: TextSpan(
                 text: 'City :  ',
